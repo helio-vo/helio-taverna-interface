@@ -1,0 +1,2554 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions name="TavernaServer" targetNamespace="http://ns.taverna.org.uk/2010/xml/server/soap/" xmlns:ns1="http://cxf.apache.org/bindings/xformat" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://ns.taverna.org.uk/2010/xml/server/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:types>
+<xs:schema targetNamespace="http://www.w3.org/1999/xlink" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:attribute name="href" type="xs:string" />
+</xs:schema>
+<xs:schema targetNamespace="http://www.w3.org/1999/02/22-rdf-syntax-ns#" version="1.0" xmlns:ns1="http://ns.taverna.org.uk/2010/data/" xmlns:ns2="http://ns.taverna.org.uk/2010/run/" xmlns:tns="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:import namespace="http://ns.taverna.org.uk/2010/data/" />
+<xs:import namespace="http://ns.taverna.org.uk/2010/run/" />
+<xs:element name="rdf" type="tns:rdfWrapper" />
+<xs:complexType name="rdfWrapper">
+    <xs:all>
+      <xs:element form="qualified" minOccurs="0" name="outputsDescription" type="ns1:outputs" />
+      <xs:choice maxOccurs="unbounded" minOccurs="0">
+        <xs:element form="qualified" name="value" type="ns1:leafValue" />
+        <xs:element form="qualified" name="list" type="ns1:listValue" />
+        <xs:element form="qualified" name="error" type="ns1:errorValue" />
+        <xs:element form="qualified" name="absent" type="ns1:absentValue" />
+      </xs:choice>
+      <xs:element form="qualified" minOccurs="0" name="run" type="ns2:run" />
+    </xs:all>
+  </xs:complexType>
+<xs:attribute name="about" type="xs:string" />
+<xs:attribute name="resource" type="xs:string" />
+</xs:schema>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://ns.taverna.org.uk/2010/xml/server/soap/" xmlns:ns1="http://ns.taverna.org.uk/2010/xml/server/" xmlns:ns2="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:ns3="http://ns.taverna.org.uk/2010/data/in" xmlns:tns="http://ns.taverna.org.uk/2010/xml/server/soap/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="http://ns.taverna.org.uk/2010/xml/server/" />
+  <xs:import namespace="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+  <xs:import namespace="http://ns.taverna.org.uk/2010/data/in" />
+  <xs:element name="addRunListener" type="tns:addRunListener" />
+  <xs:element name="addRunListenerResponse" type="tns:addRunListenerResponse" />
+  <xs:element name="deleteRunCertificates" type="tns:deleteRunCertificates" />
+  <xs:element name="deleteRunCertificatesResponse" type="tns:deleteRunCertificatesResponse" />
+  <xs:element name="deleteRunCredential" type="tns:deleteRunCredential" />
+  <xs:element name="deleteRunCredentialResponse" type="tns:deleteRunCredentialResponse" />
+  <xs:element name="destroyRun" type="tns:destroyRun" />
+  <xs:element name="destroyRunDirectoryEntry" type="tns:destroyRunDirectoryEntry" />
+  <xs:element name="destroyRunDirectoryEntryResponse" type="tns:destroyRunDirectoryEntryResponse" />
+  <xs:element name="destroyRunResponse" type="tns:destroyRunResponse" />
+  <xs:element name="getEnabledNotificationFabrics" type="tns:getEnabledNotificationFabrics" />
+  <xs:element name="getEnabledNotificationFabricsResponse" type="tns:getEnabledNotificationFabricsResponse" />
+  <xs:element name="getMaxSimultaneousRuns" type="tns:getMaxSimultaneousRuns" />
+  <xs:element name="getMaxSimultaneousRunsResponse" type="tns:getMaxSimultaneousRunsResponse" />
+  <xs:element name="getPermittedListenerTypes" type="tns:getPermittedListenerTypes" />
+  <xs:element name="getPermittedListenerTypesResponse" type="tns:getPermittedListenerTypesResponse" />
+  <xs:element name="getPermittedWorkflows" type="tns:getPermittedWorkflows" />
+  <xs:element name="getPermittedWorkflowsResponse" type="tns:getPermittedWorkflowsResponse" />
+  <xs:element name="getRunCertificates" type="tns:getRunCertificates" />
+  <xs:element name="getRunCertificatesResponse" type="tns:getRunCertificatesResponse" />
+  <xs:element name="getRunCreationTime" type="tns:getRunCreationTime" />
+  <xs:element name="getRunCreationTimeResponse" type="tns:getRunCreationTimeResponse" />
+  <xs:element name="getRunCredentials" type="tns:getRunCredentials" />
+  <xs:element name="getRunCredentialsResponse" type="tns:getRunCredentialsResponse" />
+  <xs:element name="getRunDirectoryAsZip" type="tns:getRunDirectoryAsZip" />
+  <xs:element name="getRunDirectoryAsZipResponse" type="tns:getRunDirectoryAsZipResponse" />
+  <xs:element name="getRunDirectoryContents" type="tns:getRunDirectoryContents" />
+  <xs:element name="getRunDirectoryContentsResponse" type="tns:getRunDirectoryContentsResponse" />
+  <xs:element name="getRunExpiry" type="tns:getRunExpiry" />
+  <xs:element name="getRunExpiryResponse" type="tns:getRunExpiryResponse" />
+  <xs:element name="getRunFileContents" type="tns:getRunFileContents" />
+  <xs:element name="getRunFileContentsResponse" type="tns:getRunFileContentsResponse" />
+  <xs:element name="getRunFileType" type="tns:getRunFileType" />
+  <xs:element name="getRunFileTypeResponse" type="tns:getRunFileTypeResponse" />
+  <xs:element name="getRunFileLength" type="tns:getRunFileLength" />
+  <xs:element name="getRunFileLengthResponse" type="tns:getRunFileLengthResponse" />
+  <xs:element name="getRunFinishTime" type="tns:getRunFinishTime" />
+  <xs:element name="getRunFinishTimeResponse" type="tns:getRunFinishTimeResponse" />
+  <xs:element name="getRunInputDescriptor" type="tns:getRunInputDescriptor" />
+  <xs:element name="getRunInputDescriptorResponse" type="tns:getRunInputDescriptorResponse" />
+  <xs:element name="getRunInputs" type="tns:getRunInputs" />
+  <xs:element name="getRunInputsResponse" type="tns:getRunInputsResponse" />
+  <xs:element name="getRunListenerConfiguration" type="tns:getRunListenerConfiguration" />
+  <xs:element name="getRunListenerConfigurationResponse" type="tns:getRunListenerConfigurationResponse" />
+  <xs:element name="getRunListenerProperties" type="tns:getRunListenerProperties" />
+  <xs:element name="getRunListenerPropertiesResponse" type="tns:getRunListenerPropertiesResponse" />
+  <xs:element name="getRunListenerProperty" type="tns:getRunListenerProperty" />
+  <xs:element name="getRunListenerPropertyResponse" type="tns:getRunListenerPropertyResponse" />
+  <xs:element name="getRunListeners" type="tns:getRunListeners" />
+  <xs:element name="getRunListenersResponse" type="tns:getRunListenersResponse" />
+  <xs:element name="getRunOutputBaclavaFile" type="tns:getRunOutputBaclavaFile" />
+  <xs:element name="getRunOutputBaclavaFileResponse" type="tns:getRunOutputBaclavaFileResponse" />
+  <xs:element name="getRunOutputDescription" type="tns:getRunOutputDescription" />
+  <xs:element name="getRunOutputDescriptionResponse" type="tns:getRunOutputDescriptionResponse" />
+  <xs:element name="getRunOwner" type="tns:getRunOwner" />
+  <xs:element name="getRunOwnerResponse" type="tns:getRunOwnerResponse" />
+  <xs:element name="getRunStartTime" type="tns:getRunStartTime" />
+  <xs:element name="getRunStartTimeResponse" type="tns:getRunStartTimeResponse" />
+  <xs:element name="getRunStatus" type="tns:getRunStatus" />
+  <xs:element name="getRunStatusResponse" type="tns:getRunStatusResponse" />
+  <xs:element name="getRunWorkflow" type="tns:getRunWorkflow" />
+  <xs:element name="getRunWorkflowResponse" type="tns:getRunWorkflowResponse" />
+  <xs:element name="listRunPermissions" type="tns:listRunPermissions" />
+  <xs:element name="listRunPermissionsResponse" type="tns:listRunPermissionsResponse" />
+  <xs:element name="listRuns" type="tns:listRuns" />
+  <xs:element name="listRunsResponse" type="tns:listRunsResponse" />
+  <xs:element name="makeRunDirectory" type="tns:makeRunDirectory" />
+  <xs:element name="makeRunDirectoryResponse" type="tns:makeRunDirectoryResponse" />
+  <xs:element name="makeRunFile" type="tns:makeRunFile" />
+  <xs:element name="makeRunFileResponse" type="tns:makeRunFileResponse" />
+  <xs:element name="permissionList" type="tns:permissionList" />
+  <xs:element name="setRunCertificates" type="tns:setRunCertificates" />
+  <xs:element name="setRunCertificatesResponse" type="tns:setRunCertificatesResponse" />
+  <xs:element name="setRunCredential" type="tns:setRunCredential" />
+  <xs:element name="setRunCredentialResponse" type="tns:setRunCredentialResponse" />
+  <xs:element name="setRunExpiry" type="tns:setRunExpiry" />
+  <xs:element name="setRunExpiryResponse" type="tns:setRunExpiryResponse" />
+  <xs:element name="setRunFileContents" type="tns:setRunFileContents" />
+  <xs:element name="setRunFileContentsResponse" type="tns:setRunFileContentsResponse" />
+  <xs:element name="setRunInputBaclavaFile" type="tns:setRunInputBaclavaFile" />
+  <xs:element name="setRunInputBaclavaFileResponse" type="tns:setRunInputBaclavaFileResponse" />
+  <xs:element name="setRunInputPortFile" type="tns:setRunInputPortFile" />
+  <xs:element name="setRunInputPortFileResponse" type="tns:setRunInputPortFileResponse" />
+  <xs:element name="setRunInputPortValue" type="tns:setRunInputPortValue" />
+  <xs:element name="setRunInputPortValueResponse" type="tns:setRunInputPortValueResponse" />
+  <xs:element name="setRunListenerProperty" type="tns:setRunListenerProperty" />
+  <xs:element name="setRunListenerPropertyResponse" type="tns:setRunListenerPropertyResponse" />
+  <xs:element name="setRunOutputBaclavaFile" type="tns:setRunOutputBaclavaFile" />
+  <xs:element name="setRunOutputBaclavaFileResponse" type="tns:setRunOutputBaclavaFileResponse" />
+  <xs:element name="setRunPermission" type="tns:setRunPermission" />
+  <xs:element name="setRunPermissionResponse" type="tns:setRunPermissionResponse" />
+  <xs:element name="setRunStatus" type="tns:setRunStatus" />
+  <xs:element name="setRunStatusResponse" type="tns:setRunStatusResponse" />
+  <xs:element name="submitWorkflow" type="tns:submitWorkflow" />
+  <xs:element name="submitWorkflowResponse" type="tns:submitWorkflowResponse" />
+  <xs:complexType name="getRunDirectoryContents">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="runName" type="xs:string" />
+      <xs:element minOccurs="0" name="directory" type="ns1:DirectoryEntry" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getRunDirectoryContentsResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="DirectoryEntry" type="ns1:DirectoryEntry" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="setRunPermission">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="runName" type="xs:string" />
+      <xs:element minOccurs="0" name="userName" type="xs:string" />
+      <xs:element minOccurs="0" name="permission" type="ns1:permission" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="setRunPermissionResponse">
+    <xs:sequence />
+  </xs:complexType>
+  <xs:complexType name="setRunExpiry">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="runName" type="xs:string" />
+      <xs:element minOccurs="0" name="expiry" type="xs:dateTime" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="setRunExpiryResponse">
+    <xs:sequence />
+  </xs:complexType>
+  <xs:complexType name="listRunPermissions">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="runName" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="listRunPermissionsResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="PermissionList" type="tns:permissionList" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="permissionList">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="permission">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="userName" type="xs:string" />
+            <xs:element minOccurs="0" name="permission" type="ns1:permission" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getRunStartTime">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="runName" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getRunStartTimeResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="StartTime" type="xs:dateTime" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="addRunListener">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="runName" type="xs:string" />
+      <xs:element minOccurs="0" name="listenerType" type="xs:string" />
+      <xs:element minOccurs="0" name="configuration" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="addRunListenerResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ListenerName" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="setRunInputPortFile">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="runName" type="xs:string" />
+      <xs:element minOccurs="0" name="portName" type="xs:string" />
+      <xs:element minOccurs="0" name="portFilename" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="setRunInputPortFileResponse">
+    <xs:sequence />
+  </xs:complexType>
+  <xs:complexType name="setRunListenerProperty">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="runName" type="xs:string" />
+      <xs:element minOccurs="0" name="listenerName" type="xs:string" />
+      <xs:element minOccurs="0" name="propertName" type="xs:string" />
+      <xs:element minOccurs="0" name="value" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="setRunListenerPropertyResponse">
+    <xs:sequence />
+  </xs:complexType>
+  <xs:complexType name="getRunDirectoryAsZip">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="runName" type="xs:string" />
+      <xs:element minOccurs="0" name="directory" type="ns1:DirectoryEntry" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getRunDirectoryAsZipResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ZipFile" type="xs:base64Binary" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="submitWorkflow">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="workflow" type="ns1:Workflow" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="submitWorkflowResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Run" type="ns1:TavernaRun" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getRunCertificates">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="runName" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getRunCertificatesResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="CertificateCollections" type="ns1:TrustDescriptor" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getRunCredentials">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="runName" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getRunCredentialsResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="Credentials" type="ns1:CredentialDescriptor" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getPermittedWorkflows">
+    <xs:sequence />
+  </xs:complexType>
+  <xs:complexType name="getPermittedWorkflowsResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="PermittedWorkflow" type="ns1:Workflow" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getEnabledNotificationFabrics">
+    <xs:sequence />
+  </xs:complexType>
+  <xs:complexType name="getEnabledNotificationFabricsResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="EnabledNotifierFabric" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getRunListenerProperty">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="runName" type="xs:string" />
+      <xs:element minOccurs="0" name="listenerName" type="xs:string" />
+      <xs:element minOccurs="0" name="propertyName" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getRunListenerPropertyResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ListenerPropertyValue" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="setRunInputPortValue">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="runName" type="xs:string" />
+      <xs:element minOccurs="0" name="portName" type="xs:string" />
+      <xs:element minOccurs="0" name="portValue" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="setRunInputPortValueResponse">
+    <xs:sequence />
+  </xs:complexType>
+  <xs:complexType name="getRunListeners">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="runName" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getRunListenersResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="ListenerName" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="setRunCredential">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="runName" type="xs:string" />
+      <xs:element minOccurs="0" name="credentialID" type="xs:string" />
+      <xs:element minOccurs="0" name="credential" type="ns1:CredentialDescriptor" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="setRunCredentialResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="credentialID" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="listRuns">
+    <xs:sequence />
+  </xs:complexType>
+  <xs:complexType name="listRunsResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="Run" type="ns1:TavernaRun" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getRunOutputDescription">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="runName" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getRunOutputDescriptionResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="OutputDescription" type="ns2:rdfWrapper" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="destroyRunDirectoryEntry">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="runName" type="xs:string" />
+      <xs:element minOccurs="0" name="directoryEntry" type="ns1:DirectoryEntry" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="destroyRunDirectoryEntryResponse">
+    <xs:sequence />
+  </xs:complexType>
+  <xs:complexType name="destroyRun">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="runName" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="destroyRunResponse">
+    <xs:sequence />
+  </xs:complexType>
+  <xs:complexType name="getPermittedListenerTypes">
+    <xs:sequence />
+  </xs:complexType>
+  <xs:complexType name="getPermittedListenerTypesResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="PermittedListenerType" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getRunFileLength">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="runName" type="xs:string" />
+      <xs:element minOccurs="0" name="fileName" type="ns1:DirectoryEntry" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getRunFileLengthResponse">
+    <xs:sequence>
+      <xs:element name="FileLength" type="xs:long" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getRunFinishTime">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="runName" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getRunFinishTimeResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="FinishTime" type="xs:dateTime" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getRunWorkflow">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="runName" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getRunWorkflowResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CreationWorkflow" type="ns1:Workflow" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getRunListenerConfiguration">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="runName" type="xs:string" />
+      <xs:element minOccurs="0" name="listenerName" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getRunListenerConfigurationResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ListenerConfiguration" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="deleteRunCredential">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="runName" type="xs:string" />
+      <xs:element minOccurs="0" name="credentialID" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="deleteRunCredentialResponse">
+    <xs:sequence />
+  </xs:complexType>
+  <xs:complexType name="getRunStatus">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="runName" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getRunStatusResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Status" type="ns1:Status" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="makeRunFile">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="runName" type="xs:string" />
+      <xs:element minOccurs="0" name="parentDirectory" type="ns1:DirectoryEntry" />
+      <xs:element minOccurs="0" name="fileName" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="makeRunFileResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CreatedFile" type="ns1:DirectoryEntry" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="setRunStatus">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="runName" type="xs:string" />
+      <xs:element minOccurs="0" name="status" type="ns1:Status" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="setRunStatusResponse">
+    <xs:sequence />
+  </xs:complexType>
+  <xs:complexType name="getRunExpiry">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="runName" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getRunExpiryResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Expiry" type="xs:dateTime" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getRunOwner">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="runName" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getRunOwnerResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Owner" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getRunListenerProperties">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="runName" type="xs:string" />
+      <xs:element minOccurs="0" name="listenerName" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getRunListenerPropertiesResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="ListenerPropertyName" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="setRunOutputBaclavaFile">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="runName" type="xs:string" />
+      <xs:element minOccurs="0" name="outputFile" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="setRunOutputBaclavaFileResponse">
+    <xs:sequence />
+  </xs:complexType>
+  <xs:complexType name="setRunInputBaclavaFile">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="runName" type="xs:string" />
+      <xs:element minOccurs="0" name="fileName" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="setRunInputBaclavaFileResponse">
+    <xs:sequence />
+  </xs:complexType>
+  <xs:complexType name="makeRunDirectory">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="runName" type="xs:string" />
+      <xs:element minOccurs="0" name="parentDirectory" type="ns1:DirectoryEntry" />
+      <xs:element minOccurs="0" name="directoryName" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="makeRunDirectoryResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CreatedDirectory" type="ns1:DirectoryEntry" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="setRunCertificates">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="runName" type="xs:string" />
+      <xs:element minOccurs="0" name="certificateID" type="xs:string" />
+      <xs:element minOccurs="0" name="certificate" type="ns1:TrustDescriptor" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="setRunCertificatesResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="certificateID" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getRunOutputBaclavaFile">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="runName" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getRunOutputBaclavaFileResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="OutputBaclavaFile" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getRunInputs">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="runName" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getRunInputsResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="RunInputDescription" type="ns1:InputDescription" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getRunCreationTime">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="runName" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getRunCreationTimeResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CreationTime" type="xs:dateTime" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="setRunFileContents">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="runName" type="xs:string" />
+      <xs:element minOccurs="0" name="fileName" type="ns1:DirectoryEntry" />
+      <xs:element minOccurs="0" name="contents" type="xs:base64Binary" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="setRunFileContentsResponse">
+    <xs:sequence />
+  </xs:complexType>
+  <xs:complexType name="deleteRunCertificates">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="runName" type="xs:string" />
+      <xs:element minOccurs="0" name="certificateID" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="deleteRunCertificatesResponse">
+    <xs:sequence />
+  </xs:complexType>
+  <xs:complexType name="getRunFileContents">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="runName" type="xs:string" />
+      <xs:element minOccurs="0" name="fileName" type="ns1:DirectoryEntry" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getRunFileContentsResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="FileContents" type="xs:base64Binary" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getRunFileType">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="runName" type="xs:string" />
+      <xs:element minOccurs="0" name="fileName" type="ns1:DirectoryEntry" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getRunFileTypeResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="FileContentType" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getRunInputDescriptor">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="runName" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getRunInputDescriptorResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="RunInputDescriptor" type="ns3:inputDescription" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getMaxSimultaneousRuns">
+    <xs:sequence />
+  </xs:complexType>
+  <xs:complexType name="getMaxSimultaneousRunsResponse">
+    <xs:sequence>
+      <xs:element name="MaxSimultaneousRuns" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="FilesystemAccessFault" type="tns:FilesystemAccessFault" />
+  <xs:complexType name="FilesystemAccessFault">
+    <xs:sequence />
+  </xs:complexType>
+  <xs:element name="NoDirectoryEntryFault" type="tns:NoDirectoryEntryFault" />
+  <xs:complexType name="NoDirectoryEntryFault">
+    <xs:sequence />
+  </xs:complexType>
+  <xs:element name="UnknownRunFault" type="tns:UnknownRunFault" />
+  <xs:complexType name="UnknownRunFault">
+    <xs:sequence />
+  </xs:complexType>
+  <xs:element name="NotOwnerFault" type="tns:NotOwnerFault" />
+  <xs:complexType name="NotOwnerFault">
+    <xs:sequence />
+  </xs:complexType>
+  <xs:element name="NoUpdateFault" type="tns:NoUpdateFault" />
+  <xs:complexType name="NoUpdateFault">
+    <xs:sequence />
+  </xs:complexType>
+  <xs:element name="NoListenerFault" type="tns:NoListenerFault" />
+  <xs:complexType name="NoListenerFault">
+    <xs:sequence />
+  </xs:complexType>
+  <xs:element name="BadPropertyValueFault" type="tns:BadPropertyValueFault" />
+  <xs:complexType name="BadPropertyValueFault">
+    <xs:sequence />
+  </xs:complexType>
+  <xs:element name="NoCredentialException" type="tns:NoCredentialException" />
+  <xs:complexType name="NoCredentialException">
+    <xs:sequence />
+  </xs:complexType>
+  <xs:element name="InvalidCredentialException" type="tns:InvalidCredentialException" />
+  <xs:complexType name="InvalidCredentialException">
+    <xs:sequence />
+  </xs:complexType>
+</xs:schema>
+<xs:schema attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://ns.taverna.org.uk/2010/xml/server/" version="1.0" xmlns:tns="http://ns.taverna.org.uk/2010/xml/server/" xmlns:ts="http://ns.taverna.org.uk/2010/xml/server/" xmlns:ts-rest="http://ns.taverna.org.uk/2010/xml/server/rest/" xmlns:ts-soap="http://ns.taverna.org.uk/2010/xml/server/soap/" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:import namespace="http://www.w3.org/1999/xlink" />
+<xs:element name="cagridproxy" type="tns:CaGridProxyCredential" />
+<xs:element name="dir" type="tns:DirectoryReference" />
+<xs:element name="file" type="tns:FileReference" />
+<xs:element name="inputDescription" type="tns:InputDescription" />
+<xs:element name="keypair" type="tns:KeyPairCredential" />
+<xs:element name="password" type="tns:PasswordCredential" />
+<xs:element name="runReference" type="tns:TavernaRun" />
+<xs:element name="trustedIdentity" type="tns:TrustDescriptor" />
+<xs:element name="workflow" type="tns:Workflow" />
+<xs:complexType name="DirectoryEntry">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute ref="xlink:href" />
+        <xs:attribute ref="tns:name" />
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+<xs:complexType name="DirectoryReference">
+    <xs:simpleContent>
+      <xs:extension base="tns:DirectoryEntry" />
+    </xs:simpleContent>
+  </xs:complexType>
+<xs:complexType name="FileReference">
+    <xs:simpleContent>
+      <xs:extension base="tns:DirectoryEntry" />
+    </xs:simpleContent>
+  </xs:complexType>
+<xs:complexType name="Workflow">
+    <xs:sequence>
+      <xs:any maxOccurs="unbounded" minOccurs="0" namespace="##other" processContents="lax" />
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="TavernaRun">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute ref="xlink:href" />
+        <xs:attribute ref="tns:serverVersion" />
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+<xs:complexType final="extension restriction" name="TrustDescriptor">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="certificateFile" type="xs:string" />
+      <xs:element minOccurs="0" name="fileType" type="xs:string" />
+      <xs:element minOccurs="0" name="certificateBytes" type="xs:base64Binary" />
+    </xs:sequence>
+    <xs:attribute ref="xlink:href" />
+  </xs:complexType>
+<xs:complexType abstract="true" name="CredentialDescriptor">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="serviceURI" type="xs:string" />
+      <xs:element minOccurs="0" name="credentialBytes" type="xs:base64Binary" />
+    </xs:sequence>
+    <xs:attribute ref="xlink:href" />
+  </xs:complexType>
+<xs:complexType name="KeyPairCredential">
+    <xs:complexContent>
+      <xs:extension base="tns:CredentialDescriptor">
+        <xs:sequence>
+          <xs:element name="credentialName" type="xs:string" />
+          <xs:element minOccurs="0" name="credentialFile" type="xs:string" />
+          <xs:element minOccurs="0" name="fileType" type="xs:string" />
+          <xs:element minOccurs="0" name="unlockPassword" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="PasswordCredential">
+    <xs:complexContent>
+      <xs:extension base="tns:CredentialDescriptor">
+        <xs:sequence>
+          <xs:element name="username" type="xs:string" />
+          <xs:element name="password" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="CaGridProxyCredential">
+    <xs:complexContent>
+      <xs:extension base="tns:KeyPairCredential">
+        <xs:sequence>
+          <xs:element name="authenticationService" type="xs:string" />
+          <xs:element name="dorianService" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="InputDescription">
+    <xs:complexContent>
+      <xs:extension base="tns:versionedElement">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="baclavaFile" type="xs:string" />
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="port" type="tns:PortDescription" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType abstract="true" name="versionedElement">
+    <xs:sequence />
+    <xs:attribute ref="tns:serverVersion" />
+    <xs:attribute ref="tns:serverRevision" />
+    <xs:attribute ref="tns:serverBuildTimestamp" />
+  </xs:complexType>
+<xs:complexType name="PortDescription">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute ref="tns:name" use="required" />
+        <xs:attribute ref="tns:file" />
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+<xs:simpleType name="permission">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="none" />
+      <xs:enumeration value="read" />
+      <xs:enumeration value="update" />
+      <xs:enumeration value="destroy" />
+    </xs:restriction>
+  </xs:simpleType>
+<xs:simpleType name="Status">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Initialized" />
+      <xs:enumeration value="Operating" />
+      <xs:enumeration value="Stopped" />
+      <xs:enumeration value="Finished" />
+    </xs:restriction>
+  </xs:simpleType>
+<xs:attribute name="file" type="xs:string" />
+<xs:attribute name="name" type="xs:string" />
+<xs:attribute name="serverBuildTimestamp" type="xs:string" />
+<xs:attribute name="serverRevision" type="xs:string" />
+<xs:attribute name="serverVersion" type="xs:string" />
+</xs:schema>
+<xs:schema targetNamespace="http://ns.taverna.org.uk/2010/run/" version="1.0" xmlns:ns1="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:ns2="http://www.w3.org/1999/xlink" xmlns:tns="http://ns.taverna.org.uk/2010/run/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:import namespace="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+<xs:import namespace="http://www.w3.org/1999/xlink" />
+<xs:element name="workflowRun" type="tns:run" />
+<xs:complexType name="run">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="runOf">
+        <xs:complexType>
+          <xs:sequence />
+          <xs:attribute ref="ns1:resource" use="required" />
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute ref="ns1:about" />
+    <xs:attribute ref="ns2:href" />
+  </xs:complexType>
+</xs:schema>
+<xs:schema attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://ns.taverna.org.uk/2010/data/in" version="1.0" xmlns:in="http://ns.taverna.org.uk/2010/data/in" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:run="http://ns.taverna.org.uk/2010/run/" xmlns:tns="http://ns.taverna.org.uk/2010/data/in" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:import namespace="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+<xs:import namespace="http://www.w3.org/1999/xlink" />
+<xs:element name="input" type="tns:input" />
+<xs:element name="inputDescription" type="tns:inputDescription" />
+<xs:complexType name="inputDescription">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:input" />
+    </xs:sequence>
+    <xs:attribute ref="rdf:about" />
+  </xs:complexType>
+<xs:complexType name="input">
+    <xs:sequence>
+      <xs:element name="name" type="xs:string" />
+      <xs:element minOccurs="0" name="depth" type="xs:int" />
+    </xs:sequence>
+    <xs:attribute ref="xlink:href" />
+    <xs:attribute ref="rdf:about" />
+  </xs:complexType>
+</xs:schema>
+<xs:schema attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://ns.taverna.org.uk/2010/data/" version="1.0" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:run="http://ns.taverna.org.uk/2010/run/" xmlns:tns="http://ns.taverna.org.uk/2010/data/" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:import namespace="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+<xs:import namespace="http://www.w3.org/1999/xlink" />
+<xs:element name="workflowOutputs" type="tns:outputs" />
+<xs:complexType name="outputs">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="contains" type="tns:contains" />
+    </xs:sequence>
+    <xs:attribute ref="rdf:about" />
+  </xs:complexType>
+<xs:complexType name="contains">
+    <xs:sequence />
+    <xs:attribute ref="rdf:resource" />
+  </xs:complexType>
+<xs:complexType name="leafValue">
+    <xs:complexContent>
+      <xs:extension base="tns:abstractValue">
+        <xs:sequence />
+        <xs:attribute ref="tns:contentType" />
+        <xs:attribute ref="tns:byteLength" />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType abstract="true" name="abstractValue">
+    <xs:sequence />
+    <xs:attribute ref="tns:output" />
+    <xs:attribute ref="xlink:href" />
+    <xs:attribute ref="rdf:about" />
+  </xs:complexType>
+<xs:complexType name="errorValue">
+    <xs:complexContent>
+      <xs:extension base="tns:abstractValue">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="listValue">
+    <xs:complexContent>
+      <xs:extension base="tns:abstractValue">
+        <xs:sequence>
+          <xs:choice maxOccurs="unbounded" minOccurs="0">
+            <xs:element name="value" type="tns:leafValue" />
+            <xs:element name="list" type="tns:listValue" />
+            <xs:element name="error" type="tns:errorValue" />
+            <xs:element name="absent" type="tns:absentValue" />
+          </xs:choice>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="absentValue">
+    <xs:complexContent>
+      <xs:extension base="tns:abstractValue">
+        <xs:sequence />
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:attribute name="byteLength" type="xs:long" />
+<xs:attribute name="contentType" type="xs:string" />
+<xs:attribute name="output" type="xs:string" />
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="makeRunFileResponse">
+    <wsdl:part element="tns:makeRunFileResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="listRuns">
+    <wsdl:part element="tns:listRuns" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="setRunPermission">
+    <wsdl:part element="tns:setRunPermission" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getRunListenerProperties">
+    <wsdl:part element="tns:getRunListenerProperties" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getRunListenerPropertiesResponse">
+    <wsdl:part element="tns:getRunListenerPropertiesResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getRunCreationTimeResponse">
+    <wsdl:part element="tns:getRunCreationTimeResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getRunCredentials">
+    <wsdl:part element="tns:getRunCredentials" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="setRunListenerPropertyResponse">
+    <wsdl:part element="tns:setRunListenerPropertyResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getEnabledNotificationFabricsResponse">
+    <wsdl:part element="tns:getEnabledNotificationFabricsResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="makeRunDirectory">
+    <wsdl:part element="tns:makeRunDirectory" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getRunDirectoryContents">
+    <wsdl:part element="tns:getRunDirectoryContents" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="UnknownRunException">
+    <wsdl:part element="tns:UnknownRunFault" name="UnknownRunException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getRunWorkflowResponse">
+    <wsdl:part element="tns:getRunWorkflowResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getRunInputDescriptorResponse">
+    <wsdl:part element="tns:getRunInputDescriptorResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getRunStatus">
+    <wsdl:part element="tns:getRunStatus" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getPermittedWorkflows">
+    <wsdl:part element="tns:getPermittedWorkflows" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="NoListenerException">
+    <wsdl:part element="tns:NoListenerFault" name="NoListenerException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="BadStateChangeException">
+    <wsdl:part element="tns:NoUpdateFault" name="BadStateChangeException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="destroyRunDirectoryEntryResponse">
+    <wsdl:part element="tns:destroyRunDirectoryEntryResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getRunFinishTime">
+    <wsdl:part element="tns:getRunFinishTime" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getRunExpiry">
+    <wsdl:part element="tns:getRunExpiry" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getRunFileLengthResponse">
+    <wsdl:part element="tns:getRunFileLengthResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="FilesystemAccessException">
+    <wsdl:part element="tns:FilesystemAccessFault" name="FilesystemAccessException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="listRunPermissions">
+    <wsdl:part element="tns:listRunPermissions" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getRunListenersResponse">
+    <wsdl:part element="tns:getRunListenersResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="NoDirectoryEntryException">
+    <wsdl:part element="tns:NoDirectoryEntryFault" name="NoDirectoryEntryException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getRunFileLength">
+    <wsdl:part element="tns:getRunFileLength" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="submitWorkflow">
+    <wsdl:part element="tns:submitWorkflow" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getRunFinishTimeResponse">
+    <wsdl:part element="tns:getRunFinishTimeResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="destroyRun">
+    <wsdl:part element="tns:destroyRun" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="setRunOutputBaclavaFile">
+    <wsdl:part element="tns:setRunOutputBaclavaFile" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getRunCertificatesResponse">
+    <wsdl:part element="tns:getRunCertificatesResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getRunFileContents">
+    <wsdl:part element="tns:getRunFileContents" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getRunFileType">
+    <wsdl:part element="tns:getRunFileType" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getRunOutputDescription">
+    <wsdl:part element="tns:getRunOutputDescription" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getRunOwner">
+    <wsdl:part element="tns:getRunOwner" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="setRunInputPortFileResponse">
+    <wsdl:part element="tns:setRunInputPortFileResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="setRunCredential">
+    <wsdl:part element="tns:setRunCredential" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="NoCredentialException">
+    <wsdl:part element="tns:NoCredentialException" name="NoCredentialException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getRunStartTimeResponse">
+    <wsdl:part element="tns:getRunStartTimeResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="setRunListenerProperty">
+    <wsdl:part element="tns:setRunListenerProperty" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getRunStatusResponse">
+    <wsdl:part element="tns:getRunStatusResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getRunListenerPropertyResponse">
+    <wsdl:part element="tns:getRunListenerPropertyResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getRunCreationTime">
+    <wsdl:part element="tns:getRunCreationTime" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getRunStartTime">
+    <wsdl:part element="tns:getRunStartTime" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deleteRunCertificatesResponse">
+    <wsdl:part element="tns:deleteRunCertificatesResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getRunFileContentsResponse">
+    <wsdl:part element="tns:getRunFileContentsResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getRunFileTypeResponse">
+    <wsdl:part element="tns:getRunFileTypeResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getRunDirectoryAsZipResponse">
+    <wsdl:part element="tns:getRunDirectoryAsZipResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="setRunInputBaclavaFile">
+    <wsdl:part element="tns:setRunInputBaclavaFile" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getRunDirectoryContentsResponse">
+    <wsdl:part element="tns:getRunDirectoryContentsResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="addRunListener">
+    <wsdl:part element="tns:addRunListener" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="setRunCertificates">
+    <wsdl:part element="tns:setRunCertificates" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="NoUpdateException">
+    <wsdl:part element="tns:NoUpdateFault" name="NoUpdateException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getRunListeners">
+    <wsdl:part element="tns:getRunListeners" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getRunDirectoryAsZip">
+    <wsdl:part element="tns:getRunDirectoryAsZip" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getRunCertificates">
+    <wsdl:part element="tns:getRunCertificates" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="setRunInputPortValue">
+    <wsdl:part element="tns:setRunInputPortValue" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="setRunStatus">
+    <wsdl:part element="tns:setRunStatus" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="addRunListenerResponse">
+    <wsdl:part element="tns:addRunListenerResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getRunInputDescriptor">
+    <wsdl:part element="tns:getRunInputDescriptor" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getRunOutputDescriptionResponse">
+    <wsdl:part element="tns:getRunOutputDescriptionResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="setRunInputPortFile">
+    <wsdl:part element="tns:setRunInputPortFile" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="setRunOutputBaclavaFileResponse">
+    <wsdl:part element="tns:setRunOutputBaclavaFileResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deleteRunCredentialResponse">
+    <wsdl:part element="tns:deleteRunCredentialResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="setRunStatusResponse">
+    <wsdl:part element="tns:setRunStatusResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deleteRunCredential">
+    <wsdl:part element="tns:deleteRunCredential" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getRunInputsResponse">
+    <wsdl:part element="tns:getRunInputsResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="setRunExpiryResponse">
+    <wsdl:part element="tns:setRunExpiryResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getPermittedListenerTypesResponse">
+    <wsdl:part element="tns:getPermittedListenerTypesResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="listRunsResponse">
+    <wsdl:part element="tns:listRunsResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getRunOwnerResponse">
+    <wsdl:part element="tns:getRunOwnerResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="setRunInputPortValueResponse">
+    <wsdl:part element="tns:setRunInputPortValueResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getMaxSimultaneousRuns">
+    <wsdl:part element="tns:getMaxSimultaneousRuns" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="setRunFileContents">
+    <wsdl:part element="tns:setRunFileContents" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="BadPropertyValueException">
+    <wsdl:part element="tns:BadPropertyValueFault" name="BadPropertyValueException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getRunWorkflow">
+    <wsdl:part element="tns:getRunWorkflow" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getRunOutputBaclavaFileResponse">
+    <wsdl:part element="tns:getRunOutputBaclavaFileResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getRunListenerProperty">
+    <wsdl:part element="tns:getRunListenerProperty" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getPermittedListenerTypes">
+    <wsdl:part element="tns:getPermittedListenerTypes" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getRunListenerConfiguration">
+    <wsdl:part element="tns:getRunListenerConfiguration" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getRunOutputBaclavaFile">
+    <wsdl:part element="tns:getRunOutputBaclavaFile" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deleteRunCertificates">
+    <wsdl:part element="tns:deleteRunCertificates" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="setRunCertificatesResponse">
+    <wsdl:part element="tns:setRunCertificatesResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="destroyRunDirectoryEntry">
+    <wsdl:part element="tns:destroyRunDirectoryEntry" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="InvalidCredentialException">
+    <wsdl:part element="tns:InvalidCredentialException" name="InvalidCredentialException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getRunListenerConfigurationResponse">
+    <wsdl:part element="tns:getRunListenerConfigurationResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="setRunCredentialResponse">
+    <wsdl:part element="tns:setRunCredentialResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="setRunInputBaclavaFileResponse">
+    <wsdl:part element="tns:setRunInputBaclavaFileResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="makeRunDirectoryResponse">
+    <wsdl:part element="tns:makeRunDirectoryResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="destroyRunResponse">
+    <wsdl:part element="tns:destroyRunResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="setRunPermissionResponse">
+    <wsdl:part element="tns:setRunPermissionResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="makeRunFile">
+    <wsdl:part element="tns:makeRunFile" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getPermittedWorkflowsResponse">
+    <wsdl:part element="tns:getPermittedWorkflowsResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getMaxSimultaneousRunsResponse">
+    <wsdl:part element="tns:getMaxSimultaneousRunsResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="NotOwnerException">
+    <wsdl:part element="tns:NotOwnerFault" name="NotOwnerException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="setRunExpiry">
+    <wsdl:part element="tns:setRunExpiry" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getEnabledNotificationFabrics">
+    <wsdl:part element="tns:getEnabledNotificationFabrics" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getRunExpiryResponse">
+    <wsdl:part element="tns:getRunExpiryResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getRunCredentialsResponse">
+    <wsdl:part element="tns:getRunCredentialsResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="submitWorkflowResponse">
+    <wsdl:part element="tns:submitWorkflowResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="listRunPermissionsResponse">
+    <wsdl:part element="tns:listRunPermissionsResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="setRunFileContentsResponse">
+    <wsdl:part element="tns:setRunFileContentsResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getRunInputs">
+    <wsdl:part element="tns:getRunInputs" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="tavernaService">
+    <wsdl:operation name="getRunDirectoryContents">
+      <wsdl:input message="tns:getRunDirectoryContents" name="getRunDirectoryContents">
+    </wsdl:input>
+      <wsdl:output message="tns:getRunDirectoryContentsResponse" name="getRunDirectoryContentsResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:FilesystemAccessException" name="FilesystemAccessException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:UnknownRunException" name="UnknownRunException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:NoDirectoryEntryException" name="NoDirectoryEntryException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="setRunPermission">
+      <wsdl:input message="tns:setRunPermission" name="setRunPermission">
+    </wsdl:input>
+      <wsdl:output message="tns:setRunPermissionResponse" name="setRunPermissionResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:NotOwnerException" name="NotOwnerException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:UnknownRunException" name="UnknownRunException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="setRunExpiry">
+      <wsdl:input message="tns:setRunExpiry" name="setRunExpiry">
+    </wsdl:input>
+      <wsdl:output message="tns:setRunExpiryResponse" name="setRunExpiryResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:UnknownRunException" name="UnknownRunException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:NoUpdateException" name="NoUpdateException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="listRunPermissions">
+      <wsdl:input message="tns:listRunPermissions" name="listRunPermissions">
+    </wsdl:input>
+      <wsdl:output message="tns:listRunPermissionsResponse" name="listRunPermissionsResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:NotOwnerException" name="NotOwnerException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:UnknownRunException" name="UnknownRunException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getRunStartTime">
+      <wsdl:input message="tns:getRunStartTime" name="getRunStartTime">
+    </wsdl:input>
+      <wsdl:output message="tns:getRunStartTimeResponse" name="getRunStartTimeResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:UnknownRunException" name="UnknownRunException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="addRunListener">
+      <wsdl:input message="tns:addRunListener" name="addRunListener">
+    </wsdl:input>
+      <wsdl:output message="tns:addRunListenerResponse" name="addRunListenerResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:NoListenerException" name="NoListenerException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:UnknownRunException" name="UnknownRunException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:NoUpdateException" name="NoUpdateException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="setRunInputPortFile">
+      <wsdl:input message="tns:setRunInputPortFile" name="setRunInputPortFile">
+    </wsdl:input>
+      <wsdl:output message="tns:setRunInputPortFileResponse" name="setRunInputPortFileResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:FilesystemAccessException" name="FilesystemAccessException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:UnknownRunException" name="UnknownRunException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:NoUpdateException" name="NoUpdateException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:BadPropertyValueException" name="BadPropertyValueException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:BadStateChangeException" name="BadStateChangeException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="setRunListenerProperty">
+      <wsdl:input message="tns:setRunListenerProperty" name="setRunListenerProperty">
+    </wsdl:input>
+      <wsdl:output message="tns:setRunListenerPropertyResponse" name="setRunListenerPropertyResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:NoListenerException" name="NoListenerException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:UnknownRunException" name="UnknownRunException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:NoUpdateException" name="NoUpdateException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getRunDirectoryAsZip">
+      <wsdl:input message="tns:getRunDirectoryAsZip" name="getRunDirectoryAsZip">
+    </wsdl:input>
+      <wsdl:output message="tns:getRunDirectoryAsZipResponse" name="getRunDirectoryAsZipResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:FilesystemAccessException" name="FilesystemAccessException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:UnknownRunException" name="UnknownRunException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:NoDirectoryEntryException" name="NoDirectoryEntryException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="submitWorkflow">
+      <wsdl:input message="tns:submitWorkflow" name="submitWorkflow">
+    </wsdl:input>
+      <wsdl:output message="tns:submitWorkflowResponse" name="submitWorkflowResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:NoUpdateException" name="NoUpdateException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getRunCertificates">
+      <wsdl:input message="tns:getRunCertificates" name="getRunCertificates">
+    </wsdl:input>
+      <wsdl:output message="tns:getRunCertificatesResponse" name="getRunCertificatesResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:NotOwnerException" name="NotOwnerException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:UnknownRunException" name="UnknownRunException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getRunCredentials">
+      <wsdl:input message="tns:getRunCredentials" name="getRunCredentials">
+    </wsdl:input>
+      <wsdl:output message="tns:getRunCredentialsResponse" name="getRunCredentialsResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:NotOwnerException" name="NotOwnerException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:UnknownRunException" name="UnknownRunException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getPermittedWorkflows">
+      <wsdl:input message="tns:getPermittedWorkflows" name="getPermittedWorkflows">
+    </wsdl:input>
+      <wsdl:output message="tns:getPermittedWorkflowsResponse" name="getPermittedWorkflowsResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getEnabledNotificationFabrics">
+      <wsdl:input message="tns:getEnabledNotificationFabrics" name="getEnabledNotificationFabrics">
+    </wsdl:input>
+      <wsdl:output message="tns:getEnabledNotificationFabricsResponse" name="getEnabledNotificationFabricsResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getRunListenerProperty">
+      <wsdl:input message="tns:getRunListenerProperty" name="getRunListenerProperty">
+    </wsdl:input>
+      <wsdl:output message="tns:getRunListenerPropertyResponse" name="getRunListenerPropertyResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:NoListenerException" name="NoListenerException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:UnknownRunException" name="UnknownRunException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="setRunInputPortValue">
+      <wsdl:input message="tns:setRunInputPortValue" name="setRunInputPortValue">
+    </wsdl:input>
+      <wsdl:output message="tns:setRunInputPortValueResponse" name="setRunInputPortValueResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:UnknownRunException" name="UnknownRunException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:NoUpdateException" name="NoUpdateException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:BadPropertyValueException" name="BadPropertyValueException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:BadStateChangeException" name="BadStateChangeException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getRunListeners">
+      <wsdl:input message="tns:getRunListeners" name="getRunListeners">
+    </wsdl:input>
+      <wsdl:output message="tns:getRunListenersResponse" name="getRunListenersResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:UnknownRunException" name="UnknownRunException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="setRunCredential">
+      <wsdl:input message="tns:setRunCredential" name="setRunCredential">
+    </wsdl:input>
+      <wsdl:output message="tns:setRunCredentialResponse" name="setRunCredentialResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:NoCredentialException" name="NoCredentialException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:NotOwnerException" name="NotOwnerException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:UnknownRunException" name="UnknownRunException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:InvalidCredentialException" name="InvalidCredentialException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:BadStateChangeException" name="BadStateChangeException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="listRuns">
+      <wsdl:input message="tns:listRuns" name="listRuns">
+    </wsdl:input>
+      <wsdl:output message="tns:listRunsResponse" name="listRunsResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getRunOutputDescription">
+      <wsdl:input message="tns:getRunOutputDescription" name="getRunOutputDescription">
+    </wsdl:input>
+      <wsdl:output message="tns:getRunOutputDescriptionResponse" name="getRunOutputDescriptionResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:FilesystemAccessException" name="FilesystemAccessException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:UnknownRunException" name="UnknownRunException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:BadStateChangeException" name="BadStateChangeException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:NoDirectoryEntryException" name="NoDirectoryEntryException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="destroyRunDirectoryEntry">
+      <wsdl:input message="tns:destroyRunDirectoryEntry" name="destroyRunDirectoryEntry">
+    </wsdl:input>
+      <wsdl:output message="tns:destroyRunDirectoryEntryResponse" name="destroyRunDirectoryEntryResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:FilesystemAccessException" name="FilesystemAccessException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:UnknownRunException" name="UnknownRunException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:NoUpdateException" name="NoUpdateException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:NoDirectoryEntryException" name="NoDirectoryEntryException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="destroyRun">
+      <wsdl:input message="tns:destroyRun" name="destroyRun">
+    </wsdl:input>
+      <wsdl:output message="tns:destroyRunResponse" name="destroyRunResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:UnknownRunException" name="UnknownRunException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:NoUpdateException" name="NoUpdateException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getPermittedListenerTypes">
+      <wsdl:input message="tns:getPermittedListenerTypes" name="getPermittedListenerTypes">
+    </wsdl:input>
+      <wsdl:output message="tns:getPermittedListenerTypesResponse" name="getPermittedListenerTypesResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getRunFileLength">
+      <wsdl:input message="tns:getRunFileLength" name="getRunFileLength">
+    </wsdl:input>
+      <wsdl:output message="tns:getRunFileLengthResponse" name="getRunFileLengthResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:FilesystemAccessException" name="FilesystemAccessException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:UnknownRunException" name="UnknownRunException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:NoDirectoryEntryException" name="NoDirectoryEntryException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getRunFinishTime">
+      <wsdl:input message="tns:getRunFinishTime" name="getRunFinishTime">
+    </wsdl:input>
+      <wsdl:output message="tns:getRunFinishTimeResponse" name="getRunFinishTimeResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:UnknownRunException" name="UnknownRunException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getRunWorkflow">
+      <wsdl:input message="tns:getRunWorkflow" name="getRunWorkflow">
+    </wsdl:input>
+      <wsdl:output message="tns:getRunWorkflowResponse" name="getRunWorkflowResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:UnknownRunException" name="UnknownRunException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getRunListenerConfiguration">
+      <wsdl:input message="tns:getRunListenerConfiguration" name="getRunListenerConfiguration">
+    </wsdl:input>
+      <wsdl:output message="tns:getRunListenerConfigurationResponse" name="getRunListenerConfigurationResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:NoListenerException" name="NoListenerException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:UnknownRunException" name="UnknownRunException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="deleteRunCredential">
+      <wsdl:input message="tns:deleteRunCredential" name="deleteRunCredential">
+    </wsdl:input>
+      <wsdl:output message="tns:deleteRunCredentialResponse" name="deleteRunCredentialResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:NoCredentialException" name="NoCredentialException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:NotOwnerException" name="NotOwnerException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:UnknownRunException" name="UnknownRunException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:BadStateChangeException" name="BadStateChangeException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getRunStatus">
+      <wsdl:input message="tns:getRunStatus" name="getRunStatus">
+    </wsdl:input>
+      <wsdl:output message="tns:getRunStatusResponse" name="getRunStatusResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:UnknownRunException" name="UnknownRunException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="makeRunFile">
+      <wsdl:input message="tns:makeRunFile" name="makeRunFile">
+    </wsdl:input>
+      <wsdl:output message="tns:makeRunFileResponse" name="makeRunFileResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:FilesystemAccessException" name="FilesystemAccessException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:UnknownRunException" name="UnknownRunException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:NoUpdateException" name="NoUpdateException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:NoDirectoryEntryException" name="NoDirectoryEntryException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="setRunStatus">
+      <wsdl:input message="tns:setRunStatus" name="setRunStatus">
+    </wsdl:input>
+      <wsdl:output message="tns:setRunStatusResponse" name="setRunStatusResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:UnknownRunException" name="UnknownRunException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:NoUpdateException" name="NoUpdateException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:BadStateChangeException" name="BadStateChangeException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getRunExpiry">
+      <wsdl:input message="tns:getRunExpiry" name="getRunExpiry">
+    </wsdl:input>
+      <wsdl:output message="tns:getRunExpiryResponse" name="getRunExpiryResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:UnknownRunException" name="UnknownRunException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getRunOwner">
+      <wsdl:input message="tns:getRunOwner" name="getRunOwner">
+    </wsdl:input>
+      <wsdl:output message="tns:getRunOwnerResponse" name="getRunOwnerResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:UnknownRunException" name="UnknownRunException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getRunListenerProperties">
+      <wsdl:input message="tns:getRunListenerProperties" name="getRunListenerProperties">
+    </wsdl:input>
+      <wsdl:output message="tns:getRunListenerPropertiesResponse" name="getRunListenerPropertiesResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:NoListenerException" name="NoListenerException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:UnknownRunException" name="UnknownRunException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="setRunOutputBaclavaFile">
+      <wsdl:input message="tns:setRunOutputBaclavaFile" name="setRunOutputBaclavaFile">
+    </wsdl:input>
+      <wsdl:output message="tns:setRunOutputBaclavaFileResponse" name="setRunOutputBaclavaFileResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:FilesystemAccessException" name="FilesystemAccessException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:UnknownRunException" name="UnknownRunException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:NoUpdateException" name="NoUpdateException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:BadStateChangeException" name="BadStateChangeException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="setRunInputBaclavaFile">
+      <wsdl:input message="tns:setRunInputBaclavaFile" name="setRunInputBaclavaFile">
+    </wsdl:input>
+      <wsdl:output message="tns:setRunInputBaclavaFileResponse" name="setRunInputBaclavaFileResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:FilesystemAccessException" name="FilesystemAccessException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:UnknownRunException" name="UnknownRunException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:NoUpdateException" name="NoUpdateException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:BadStateChangeException" name="BadStateChangeException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="makeRunDirectory">
+      <wsdl:input message="tns:makeRunDirectory" name="makeRunDirectory">
+    </wsdl:input>
+      <wsdl:output message="tns:makeRunDirectoryResponse" name="makeRunDirectoryResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:FilesystemAccessException" name="FilesystemAccessException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:UnknownRunException" name="UnknownRunException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:NoUpdateException" name="NoUpdateException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:NoDirectoryEntryException" name="NoDirectoryEntryException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="setRunCertificates">
+      <wsdl:input message="tns:setRunCertificates" name="setRunCertificates">
+    </wsdl:input>
+      <wsdl:output message="tns:setRunCertificatesResponse" name="setRunCertificatesResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:NoCredentialException" name="NoCredentialException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:NotOwnerException" name="NotOwnerException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:UnknownRunException" name="UnknownRunException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:InvalidCredentialException" name="InvalidCredentialException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:BadStateChangeException" name="BadStateChangeException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getRunOutputBaclavaFile">
+      <wsdl:input message="tns:getRunOutputBaclavaFile" name="getRunOutputBaclavaFile">
+    </wsdl:input>
+      <wsdl:output message="tns:getRunOutputBaclavaFileResponse" name="getRunOutputBaclavaFileResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:UnknownRunException" name="UnknownRunException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getRunInputs">
+      <wsdl:input message="tns:getRunInputs" name="getRunInputs">
+    </wsdl:input>
+      <wsdl:output message="tns:getRunInputsResponse" name="getRunInputsResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:UnknownRunException" name="UnknownRunException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getRunCreationTime">
+      <wsdl:input message="tns:getRunCreationTime" name="getRunCreationTime">
+    </wsdl:input>
+      <wsdl:output message="tns:getRunCreationTimeResponse" name="getRunCreationTimeResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:UnknownRunException" name="UnknownRunException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="setRunFileContents">
+      <wsdl:input message="tns:setRunFileContents" name="setRunFileContents">
+    </wsdl:input>
+      <wsdl:output message="tns:setRunFileContentsResponse" name="setRunFileContentsResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:FilesystemAccessException" name="FilesystemAccessException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:UnknownRunException" name="UnknownRunException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:NoUpdateException" name="NoUpdateException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:NoDirectoryEntryException" name="NoDirectoryEntryException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="deleteRunCertificates">
+      <wsdl:input message="tns:deleteRunCertificates" name="deleteRunCertificates">
+    </wsdl:input>
+      <wsdl:output message="tns:deleteRunCertificatesResponse" name="deleteRunCertificatesResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:NoCredentialException" name="NoCredentialException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:NotOwnerException" name="NotOwnerException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:UnknownRunException" name="UnknownRunException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:BadStateChangeException" name="BadStateChangeException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getRunFileContents">
+      <wsdl:input message="tns:getRunFileContents" name="getRunFileContents">
+    </wsdl:input>
+      <wsdl:output message="tns:getRunFileContentsResponse" name="getRunFileContentsResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:FilesystemAccessException" name="FilesystemAccessException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:UnknownRunException" name="UnknownRunException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:NoDirectoryEntryException" name="NoDirectoryEntryException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getRunFileType">
+      <wsdl:input message="tns:getRunFileType" name="getRunFileType">
+    </wsdl:input>
+      <wsdl:output message="tns:getRunFileTypeResponse" name="getRunFileTypeResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:FilesystemAccessException" name="FilesystemAccessException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:UnknownRunException" name="UnknownRunException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:NoDirectoryEntryException" name="NoDirectoryEntryException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getRunInputDescriptor">
+      <wsdl:input message="tns:getRunInputDescriptor" name="getRunInputDescriptor">
+    </wsdl:input>
+      <wsdl:output message="tns:getRunInputDescriptorResponse" name="getRunInputDescriptorResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:UnknownRunException" name="UnknownRunException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getMaxSimultaneousRuns">
+      <wsdl:input message="tns:getMaxSimultaneousRuns" name="getMaxSimultaneousRuns">
+    </wsdl:input>
+      <wsdl:output message="tns:getMaxSimultaneousRunsResponse" name="getMaxSimultaneousRunsResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="TavernaServerSoapBinding" type="tns:tavernaService">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="getRunDirectoryContents">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="getRunDirectoryContents">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="getRunDirectoryContentsResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="FilesystemAccessException">
+        <soap:fault name="FilesystemAccessException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="UnknownRunException">
+        <soap:fault name="UnknownRunException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="NoDirectoryEntryException">
+        <soap:fault name="NoDirectoryEntryException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="listRunPermissions">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="listRunPermissions">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="listRunPermissionsResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="NotOwnerException">
+        <soap:fault name="NotOwnerException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="UnknownRunException">
+        <soap:fault name="UnknownRunException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="setRunExpiry">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="setRunExpiry">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="setRunExpiryResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="UnknownRunException">
+        <soap:fault name="UnknownRunException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="NoUpdateException">
+        <soap:fault name="NoUpdateException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="setRunPermission">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="setRunPermission">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="setRunPermissionResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="NotOwnerException">
+        <soap:fault name="NotOwnerException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="UnknownRunException">
+        <soap:fault name="UnknownRunException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="addRunListener">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="addRunListener">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="addRunListenerResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="NoListenerException">
+        <soap:fault name="NoListenerException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="UnknownRunException">
+        <soap:fault name="UnknownRunException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="NoUpdateException">
+        <soap:fault name="NoUpdateException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getRunStartTime">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="getRunStartTime">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="getRunStartTimeResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="UnknownRunException">
+        <soap:fault name="UnknownRunException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="setRunInputPortFile">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="setRunInputPortFile">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="setRunInputPortFileResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="FilesystemAccessException">
+        <soap:fault name="FilesystemAccessException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="UnknownRunException">
+        <soap:fault name="UnknownRunException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="NoUpdateException">
+        <soap:fault name="NoUpdateException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="BadPropertyValueException">
+        <soap:fault name="BadPropertyValueException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="BadStateChangeException">
+        <soap:fault name="BadStateChangeException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="setRunListenerProperty">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="setRunListenerProperty">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="setRunListenerPropertyResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="NoListenerException">
+        <soap:fault name="NoListenerException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="UnknownRunException">
+        <soap:fault name="UnknownRunException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="NoUpdateException">
+        <soap:fault name="NoUpdateException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getRunDirectoryAsZip">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="getRunDirectoryAsZip">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="getRunDirectoryAsZipResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="FilesystemAccessException">
+        <soap:fault name="FilesystemAccessException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="UnknownRunException">
+        <soap:fault name="UnknownRunException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="NoDirectoryEntryException">
+        <soap:fault name="NoDirectoryEntryException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="submitWorkflow">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="submitWorkflow">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="submitWorkflowResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="NoUpdateException">
+        <soap:fault name="NoUpdateException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getRunCertificates">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="getRunCertificates">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="getRunCertificatesResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="NotOwnerException">
+        <soap:fault name="NotOwnerException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="UnknownRunException">
+        <soap:fault name="UnknownRunException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getPermittedWorkflows">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="getPermittedWorkflows">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="getPermittedWorkflowsResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getRunCredentials">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="getRunCredentials">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="getRunCredentialsResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="NotOwnerException">
+        <soap:fault name="NotOwnerException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="UnknownRunException">
+        <soap:fault name="UnknownRunException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getEnabledNotificationFabrics">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="getEnabledNotificationFabrics">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="getEnabledNotificationFabricsResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getRunListenerProperty">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="getRunListenerProperty">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="getRunListenerPropertyResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="NoListenerException">
+        <soap:fault name="NoListenerException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="UnknownRunException">
+        <soap:fault name="UnknownRunException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getRunListeners">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="getRunListeners">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="getRunListenersResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="UnknownRunException">
+        <soap:fault name="UnknownRunException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="setRunInputPortValue">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="setRunInputPortValue">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="setRunInputPortValueResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="UnknownRunException">
+        <soap:fault name="UnknownRunException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="NoUpdateException">
+        <soap:fault name="NoUpdateException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="BadPropertyValueException">
+        <soap:fault name="BadPropertyValueException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="BadStateChangeException">
+        <soap:fault name="BadStateChangeException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="listRuns">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="listRuns">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="listRunsResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="setRunCredential">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="setRunCredential">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="setRunCredentialResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="NoCredentialException">
+        <soap:fault name="NoCredentialException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="NotOwnerException">
+        <soap:fault name="NotOwnerException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="UnknownRunException">
+        <soap:fault name="UnknownRunException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="InvalidCredentialException">
+        <soap:fault name="InvalidCredentialException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="BadStateChangeException">
+        <soap:fault name="BadStateChangeException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="destroyRunDirectoryEntry">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="destroyRunDirectoryEntry">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="destroyRunDirectoryEntryResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="FilesystemAccessException">
+        <soap:fault name="FilesystemAccessException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="UnknownRunException">
+        <soap:fault name="UnknownRunException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="NoUpdateException">
+        <soap:fault name="NoUpdateException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="NoDirectoryEntryException">
+        <soap:fault name="NoDirectoryEntryException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getRunOutputDescription">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="getRunOutputDescription">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="getRunOutputDescriptionResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="FilesystemAccessException">
+        <soap:fault name="FilesystemAccessException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="UnknownRunException">
+        <soap:fault name="UnknownRunException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="BadStateChangeException">
+        <soap:fault name="BadStateChangeException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="NoDirectoryEntryException">
+        <soap:fault name="NoDirectoryEntryException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="destroyRun">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="destroyRun">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="destroyRunResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="UnknownRunException">
+        <soap:fault name="UnknownRunException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="NoUpdateException">
+        <soap:fault name="NoUpdateException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getPermittedListenerTypes">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="getPermittedListenerTypes">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="getPermittedListenerTypesResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getRunFileLength">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="getRunFileLength">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="getRunFileLengthResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="FilesystemAccessException">
+        <soap:fault name="FilesystemAccessException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="UnknownRunException">
+        <soap:fault name="UnknownRunException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="NoDirectoryEntryException">
+        <soap:fault name="NoDirectoryEntryException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getRunFinishTime">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="getRunFinishTime">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="getRunFinishTimeResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="UnknownRunException">
+        <soap:fault name="UnknownRunException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getRunListenerConfiguration">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="getRunListenerConfiguration">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="getRunListenerConfigurationResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="NoListenerException">
+        <soap:fault name="NoListenerException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="UnknownRunException">
+        <soap:fault name="UnknownRunException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getRunWorkflow">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="getRunWorkflow">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="getRunWorkflowResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="UnknownRunException">
+        <soap:fault name="UnknownRunException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="deleteRunCredential">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="deleteRunCredential">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="deleteRunCredentialResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="NoCredentialException">
+        <soap:fault name="NoCredentialException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="NotOwnerException">
+        <soap:fault name="NotOwnerException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="UnknownRunException">
+        <soap:fault name="UnknownRunException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="BadStateChangeException">
+        <soap:fault name="BadStateChangeException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getRunStatus">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="getRunStatus">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="getRunStatusResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="UnknownRunException">
+        <soap:fault name="UnknownRunException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="makeRunFile">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="makeRunFile">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="makeRunFileResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="FilesystemAccessException">
+        <soap:fault name="FilesystemAccessException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="UnknownRunException">
+        <soap:fault name="UnknownRunException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="NoUpdateException">
+        <soap:fault name="NoUpdateException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="NoDirectoryEntryException">
+        <soap:fault name="NoDirectoryEntryException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getRunExpiry">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="getRunExpiry">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="getRunExpiryResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="UnknownRunException">
+        <soap:fault name="UnknownRunException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="setRunStatus">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="setRunStatus">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="setRunStatusResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="UnknownRunException">
+        <soap:fault name="UnknownRunException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="NoUpdateException">
+        <soap:fault name="NoUpdateException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="BadStateChangeException">
+        <soap:fault name="BadStateChangeException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getRunOwner">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="getRunOwner">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="getRunOwnerResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="UnknownRunException">
+        <soap:fault name="UnknownRunException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getRunListenerProperties">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="getRunListenerProperties">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="getRunListenerPropertiesResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="NoListenerException">
+        <soap:fault name="NoListenerException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="UnknownRunException">
+        <soap:fault name="UnknownRunException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="setRunInputBaclavaFile">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="setRunInputBaclavaFile">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="setRunInputBaclavaFileResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="FilesystemAccessException">
+        <soap:fault name="FilesystemAccessException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="UnknownRunException">
+        <soap:fault name="UnknownRunException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="NoUpdateException">
+        <soap:fault name="NoUpdateException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="BadStateChangeException">
+        <soap:fault name="BadStateChangeException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="setRunOutputBaclavaFile">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="setRunOutputBaclavaFile">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="setRunOutputBaclavaFileResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="FilesystemAccessException">
+        <soap:fault name="FilesystemAccessException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="UnknownRunException">
+        <soap:fault name="UnknownRunException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="NoUpdateException">
+        <soap:fault name="NoUpdateException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="BadStateChangeException">
+        <soap:fault name="BadStateChangeException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="makeRunDirectory">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="makeRunDirectory">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="makeRunDirectoryResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="FilesystemAccessException">
+        <soap:fault name="FilesystemAccessException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="UnknownRunException">
+        <soap:fault name="UnknownRunException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="NoUpdateException">
+        <soap:fault name="NoUpdateException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="NoDirectoryEntryException">
+        <soap:fault name="NoDirectoryEntryException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="setRunCertificates">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="setRunCertificates">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="setRunCertificatesResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="NoCredentialException">
+        <soap:fault name="NoCredentialException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="NotOwnerException">
+        <soap:fault name="NotOwnerException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="UnknownRunException">
+        <soap:fault name="UnknownRunException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="InvalidCredentialException">
+        <soap:fault name="InvalidCredentialException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="BadStateChangeException">
+        <soap:fault name="BadStateChangeException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getRunInputs">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="getRunInputs">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="getRunInputsResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="UnknownRunException">
+        <soap:fault name="UnknownRunException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getRunOutputBaclavaFile">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="getRunOutputBaclavaFile">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="getRunOutputBaclavaFileResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="UnknownRunException">
+        <soap:fault name="UnknownRunException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getRunCreationTime">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="getRunCreationTime">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="getRunCreationTimeResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="UnknownRunException">
+        <soap:fault name="UnknownRunException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="deleteRunCertificates">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="deleteRunCertificates">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="deleteRunCertificatesResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="NoCredentialException">
+        <soap:fault name="NoCredentialException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="NotOwnerException">
+        <soap:fault name="NotOwnerException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="UnknownRunException">
+        <soap:fault name="UnknownRunException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="BadStateChangeException">
+        <soap:fault name="BadStateChangeException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="setRunFileContents">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="setRunFileContents">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="setRunFileContentsResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="FilesystemAccessException">
+        <soap:fault name="FilesystemAccessException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="UnknownRunException">
+        <soap:fault name="UnknownRunException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="NoUpdateException">
+        <soap:fault name="NoUpdateException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="NoDirectoryEntryException">
+        <soap:fault name="NoDirectoryEntryException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getRunFileContents">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="getRunFileContents">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="getRunFileContentsResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="FilesystemAccessException">
+        <soap:fault name="FilesystemAccessException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="UnknownRunException">
+        <soap:fault name="UnknownRunException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="NoDirectoryEntryException">
+        <soap:fault name="NoDirectoryEntryException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getRunFileType">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="getRunFileType">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="getRunFileTypeResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="FilesystemAccessException">
+        <soap:fault name="FilesystemAccessException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="UnknownRunException">
+        <soap:fault name="UnknownRunException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="NoDirectoryEntryException">
+        <soap:fault name="NoDirectoryEntryException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getMaxSimultaneousRuns">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="getMaxSimultaneousRuns">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="getMaxSimultaneousRunsResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getRunInputDescriptor">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="getRunInputDescriptor">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="getRunInputDescriptorResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="UnknownRunException">
+        <soap:fault name="UnknownRunException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="TavernaServer">
+    <wsdl:port binding="tns:TavernaServerSoapBinding" name="TavernaServerImplPort">
+      <soap:address location="https://eric.rcs.manchester.ac.uk:8443/taverna-server-2/soap" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
