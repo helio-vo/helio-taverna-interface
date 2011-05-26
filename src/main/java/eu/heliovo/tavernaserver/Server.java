@@ -21,6 +21,7 @@ import org.xml.sax.SAXException;
 
 import uk.org.taverna.ns._2010.xml.server.TavernaRun;
 import uk.org.taverna.ns._2010.xml.server.Workflow;
+import uk.org.taverna.ns._2010.xml.server.soap.NoCreateException;
 import uk.org.taverna.ns._2010.xml.server.soap.NoUpdateException;
 import uk.org.taverna.ns._2010.xml.server.soap.TavernaServer;
 import uk.org.taverna.ns._2010.xml.server.soap.TavernaService;
@@ -102,9 +103,11 @@ public class Server {
 	 *             If the local Java installation is misconfigured.
 	 * @throws NoUpdateException
 	 *             If the server failed to build the workflow run.
+	 * @throws NoCreateException 
+	 *             If the server failed to build the workflow run.
 	 */
 	public Run createRun(File workflowFile) throws SAXException, IOException,
-			ParserConfigurationException, NoUpdateException {
+			ParserConfigurationException, NoUpdateException, NoCreateException {
 		Document doc = DocumentBuilderFactory.newInstance()
 				.newDocumentBuilder().parse(workflowFile);
 		return createRun(doc.getDocumentElement());
@@ -118,8 +121,10 @@ public class Server {
 	 * @return A handle to the workflow run (which is not yet started).
 	 * @throws NoUpdateException
 	 *             If the server failed to build the workflow run.
+	 * @throws NoCreateException 
+	 *             If the server failed to build the workflow run.
 	 */
-	public Run createRun(Element workflow) throws NoUpdateException {
+	public Run createRun(Element workflow) throws NoUpdateException, NoCreateException {
 		return new Run(s, workflow);
 	}
 

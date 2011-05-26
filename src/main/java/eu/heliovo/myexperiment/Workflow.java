@@ -10,6 +10,7 @@ import org.xml.sax.SAXException;
 import eu.heliovo.tavernaserver.Run;
 import eu.heliovo.tavernaserver.Server;
 
+import uk.org.taverna.ns._2010.xml.server.soap.NoCreateException;
 import uk.org.taverna.ns._2010.xml.server.soap.NoUpdateException;
 
 /**
@@ -107,7 +108,7 @@ public class Workflow extends Resource {
 		return uploader;
 	}
 
-	public Run submit(Server tavernaServer) throws NoUpdateException,
+	public Run submit(Server tavernaServer) throws NoUpdateException, NoCreateException,
 			IOException, SAXException, BadWorkflowTypeException {
 		if (!"application/vnd.taverna.t2flow+xml".equals(getContentType()))
 			throw new BadWorkflowTypeException("workflow not in t2flow format");

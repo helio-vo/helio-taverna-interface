@@ -30,6 +30,7 @@ import uk.org.taverna.ns._2010.xml.server.Workflow;
 import uk.org.taverna.ns._2010.xml.server.soap.BadPropertyValueException;
 import uk.org.taverna.ns._2010.xml.server.soap.BadStateChangeException;
 import uk.org.taverna.ns._2010.xml.server.soap.FilesystemAccessException;
+import uk.org.taverna.ns._2010.xml.server.soap.NoCreateException;
 import uk.org.taverna.ns._2010.xml.server.soap.NoDirectoryEntryException;
 import uk.org.taverna.ns._2010.xml.server.soap.NoUpdateException;
 import uk.org.taverna.ns._2010.xml.server.soap.TavernaService;
@@ -49,7 +50,7 @@ public class Run {
 	private String id;
 	private int pollInterval = 1000;
 
-	Run(TavernaService service, Element workflow) throws NoUpdateException {
+	Run(TavernaService service, Element workflow) throws NoCreateException, NoUpdateException {
 		this.s = service;
 		Workflow w = new Workflow();
 		w.getAny().add(workflow);
