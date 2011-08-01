@@ -1,31 +1,12 @@
-<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions name="TavernaServer" targetNamespace="http://ns.taverna.org.uk/2010/xml/server/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://ns.taverna.org.uk/2010/xml/server/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="TavernaServer" targetNamespace="http://ns.taverna.org.uk/2010/xml/server/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://ns.taverna.org.uk/2010/xml/server/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <wsdl:types>
 <xs:schema targetNamespace="http://www.w3.org/1999/xlink" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
 <xs:attribute name="href" type="xs:string"/>
 </xs:schema>
-<xs:schema targetNamespace="http://www.w3.org/1999/02/22-rdf-syntax-ns#" version="1.0" xmlns:ns1="http://ns.taverna.org.uk/2010/data/" xmlns:ns2="http://ns.taverna.org.uk/2010/run/" xmlns:tns="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-<xs:import namespace="http://ns.taverna.org.uk/2010/data/"/>
-<xs:import namespace="http://ns.taverna.org.uk/2010/run/"/>
-<xs:element name="rdf" type="tns:rdfWrapper"/>
-<xs:complexType name="rdfWrapper">
-    <xs:all>
-      <xs:element form="qualified" minOccurs="0" name="outputsDescription" type="ns1:outputs"/>
-      <xs:choice maxOccurs="unbounded" minOccurs="0">
-        <xs:element form="qualified" name="value" type="ns1:leafValue"/>
-        <xs:element form="qualified" name="list" type="ns1:listValue"/>
-        <xs:element form="qualified" name="error" type="ns1:errorValue"/>
-        <xs:element form="qualified" name="absent" type="ns1:absentValue"/>
-      </xs:choice>
-      <xs:element form="qualified" minOccurs="0" name="run" type="ns2:run"/>
-    </xs:all>
-  </xs:complexType>
-<xs:attribute name="about" type="xs:string"/>
-<xs:attribute name="resource" type="xs:string"/>
-</xs:schema>
-<xs:schema attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://ns.taverna.org.uk/2010/xml/server/soap/" xmlns:admin="http://ns.taverna.org.uk/2010/xml/server/admin/" xmlns:feed="http://ns.taverna.org.uk/2010/xml/server/feed/" xmlns:ns1="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:ns2="http://ns.taverna.org.uk/2010/data/in" xmlns:tns="http://ns.taverna.org.uk/2010/xml/server/soap/" xmlns:ts="http://ns.taverna.org.uk/2010/xml/server/" xmlns:ts-rest="http://ns.taverna.org.uk/2010/xml/server/rest/" xmlns:ts-soap="http://ns.taverna.org.uk/2010/xml/server/soap/" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:schema attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://ns.taverna.org.uk/2010/xml/server/soap/" xmlns:admin="http://ns.taverna.org.uk/2010/xml/server/admin/" xmlns:feed="http://ns.taverna.org.uk/2010/xml/server/feed/" xmlns:port="http://ns.taverna.org.uk/2010/port/" xmlns:tns="http://ns.taverna.org.uk/2010/xml/server/soap/" xmlns:ts="http://ns.taverna.org.uk/2010/xml/server/" xmlns:ts-rest="http://ns.taverna.org.uk/2010/xml/server/rest/" xmlns:ts-soap="http://ns.taverna.org.uk/2010/xml/server/soap/" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import namespace="http://ns.taverna.org.uk/2010/xml/server/"/>
-  <xs:import namespace="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
-  <xs:import namespace="http://ns.taverna.org.uk/2010/data/in"/>
+  <xs:import namespace="http://ns.taverna.org.uk/2010/port/"/>
   <xs:element name="addRunListener" type="ts-soap:addRunListener"/>
   <xs:element name="addRunListenerResponse" type="ts-soap:addRunListenerResponse"/>
   <xs:element name="deleteRunCertificates" type="ts-soap:deleteRunCertificates"/>
@@ -343,7 +324,7 @@
   </xs:complexType>
   <xs:complexType name="getRunOutputDescriptionResponse">
     <xs:sequence>
-      <xs:element minOccurs="0" name="OutputDescription" type="ns1:rdfWrapper"/>
+      <xs:element minOccurs="0" name="OutputDescription" type="port:outputDescription"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="destroyRunDirectoryEntry">
@@ -593,7 +574,7 @@
   </xs:complexType>
   <xs:complexType name="getRunInputDescriptorResponse">
     <xs:sequence>
-      <xs:element minOccurs="0" name="RunInputDescriptor" type="ns2:inputDescription"/>
+      <xs:element minOccurs="0" name="RunInputDescriptor" type="port:inputDescription"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="getMaxSimultaneousRuns">
@@ -697,7 +678,7 @@
   </xs:complexType>
 <xs:complexType abstract="true" name="CredentialDescriptor">
     <xs:sequence>
-      <xs:element minOccurs="0" name="serviceURI" type="xs:string"/>
+      <xs:element minOccurs="0" name="serviceURI" type="xs:anyURI"/>
       <xs:element minOccurs="0" name="credentialBytes" type="xs:base64Binary"/>
     </xs:sequence>
     <xs:attribute ref="xlink:href"/>
@@ -728,8 +709,8 @@
     <xs:complexContent>
       <xs:extension base="tns:KeyPairCredential">
         <xs:sequence>
-          <xs:element name="authenticationService" type="xs:string"/>
-          <xs:element name="dorianService" type="xs:string"/>
+          <xs:element name="authenticationService" type="xs:anyURI"/>
+          <xs:element name="dorianService" type="xs:anyURI"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -780,82 +761,67 @@
 <xs:attribute name="serverRevision" type="xs:string"/>
 <xs:attribute name="serverVersion" type="xs:string"/>
 </xs:schema>
-<xs:schema targetNamespace="http://ns.taverna.org.uk/2010/run/" version="1.0" xmlns:ns1="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:ns2="http://www.w3.org/1999/xlink" xmlns:tns="http://ns.taverna.org.uk/2010/run/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-<xs:import namespace="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
+<xs:schema attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://ns.taverna.org.uk/2010/port/" version="1.0" xmlns:port="http://ns.taverna.org.uk/2010/port/" xmlns:run="http://ns.taverna.org.uk/2010/run/" xmlns:tns="http://ns.taverna.org.uk/2010/port/" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xs="http://www.w3.org/2001/XMLSchema">
 <xs:import namespace="http://www.w3.org/1999/xlink"/>
-<xs:element name="workflowRun" type="tns:run"/>
-<xs:complexType name="run">
-    <xs:sequence>
-      <xs:element form="qualified" minOccurs="0" name="runOf">
-        <xs:complexType>
-          <xs:sequence/>
-          <xs:attribute ref="ns1:resource" use="required"/>
-        </xs:complexType>
-      </xs:element>
-    </xs:sequence>
-    <xs:attribute ref="ns1:about"/>
-    <xs:attribute ref="ns2:href"/>
-  </xs:complexType>
-</xs:schema>
-<xs:schema attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://ns.taverna.org.uk/2010/data/in" version="1.0" xmlns:in-desc="http://ns.taverna.org.uk/2010/data/in" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:run="http://ns.taverna.org.uk/2010/run/" xmlns:tns="http://ns.taverna.org.uk/2010/data/in" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-<xs:import namespace="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
-<xs:import namespace="http://www.w3.org/1999/xlink"/>
-<xs:element name="input" type="tns:input"/>
 <xs:element name="inputDescription" type="tns:inputDescription"/>
-<xs:complexType name="inputDescription">
-    <xs:sequence>
-      <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:input"/>
-    </xs:sequence>
-    <xs:attribute ref="rdf:about"/>
+<xs:element name="workflowOutputs" type="tns:outputDescription"/>
+<xs:complexType name="outputDescription">
+    <xs:complexContent>
+      <xs:extension base="tns:portDescription">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="output" type="tns:outputPort"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
   </xs:complexType>
-<xs:complexType name="input">
-    <xs:sequence>
-      <xs:element name="name" type="xs:string"/>
-      <xs:element minOccurs="0" name="depth" type="xs:int"/>
-    </xs:sequence>
-    <xs:attribute ref="xlink:href"/>
-    <xs:attribute ref="rdf:about"/>
-  </xs:complexType>
-</xs:schema>
-<xs:schema attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://ns.taverna.org.uk/2010/data/" version="1.0" xmlns:out-desc="http://ns.taverna.org.uk/2010/data/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:run="http://ns.taverna.org.uk/2010/run/" xmlns:tns="http://ns.taverna.org.uk/2010/data/" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-<xs:import namespace="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
-<xs:import namespace="http://www.w3.org/1999/xlink"/>
-<xs:element name="workflowOutputs" type="tns:outputs"/>
-<xs:complexType name="outputs">
-    <xs:sequence>
-      <xs:element maxOccurs="unbounded" minOccurs="0" name="contains" type="tns:contains"/>
-    </xs:sequence>
-    <xs:attribute ref="rdf:about"/>
-  </xs:complexType>
-<xs:complexType name="contains">
+<xs:complexType abstract="true" name="portDescription">
     <xs:sequence/>
-    <xs:attribute ref="rdf:resource"/>
+    <xs:attribute ref="tns:workflowId"/>
+    <xs:attribute ref="tns:workflowRun"/>
+    <xs:attribute ref="tns:workflowRunId"/>
+  </xs:complexType>
+<xs:complexType name="outputPort">
+    <xs:complexContent>
+      <xs:extension base="tns:port">
+        <xs:choice>
+          <xs:element name="value" type="tns:leafValue"/>
+          <xs:element name="list" type="tns:listValue"/>
+          <xs:element name="error" type="tns:errorValue"/>
+          <xs:element name="absent" type="tns:absentValue"/>
+        </xs:choice>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="port">
+    <xs:sequence/>
+    <xs:attribute ref="tns:name" use="required"/>
+    <xs:attribute ref="tns:depth"/>
   </xs:complexType>
 <xs:complexType name="leafValue">
     <xs:complexContent>
-      <xs:extension base="tns:abstractValue">
+      <xs:extension base="tns:value">
         <xs:sequence/>
+        <xs:attribute ref="tns:fileName"/>
         <xs:attribute ref="tns:contentType"/>
         <xs:attribute ref="tns:byteLength"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-<xs:complexType abstract="true" name="abstractValue">
+<xs:complexType abstract="true" name="value">
     <xs:sequence/>
-    <xs:attribute ref="tns:output"/>
     <xs:attribute ref="xlink:href"/>
-    <xs:attribute ref="rdf:about"/>
   </xs:complexType>
 <xs:complexType name="errorValue">
     <xs:complexContent>
-      <xs:extension base="tns:abstractValue">
+      <xs:extension base="tns:value">
         <xs:sequence/>
+        <xs:attribute ref="tns:depth"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
 <xs:complexType name="listValue">
     <xs:complexContent>
-      <xs:extension base="tns:abstractValue">
+      <xs:extension base="tns:value">
         <xs:sequence>
           <xs:choice maxOccurs="unbounded" minOccurs="0">
             <xs:element name="value" type="tns:leafValue"/>
@@ -864,19 +830,43 @@
             <xs:element name="absent" type="tns:absentValue"/>
           </xs:choice>
         </xs:sequence>
+        <xs:attribute ref="tns:length"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
 <xs:complexType name="absentValue">
     <xs:complexContent>
-      <xs:extension base="tns:abstractValue">
+      <xs:extension base="tns:value">
         <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="inputDescription">
+    <xs:complexContent>
+      <xs:extension base="tns:portDescription">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="input" type="tns:inputPort"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="inputPort">
+    <xs:complexContent>
+      <xs:extension base="tns:port">
+        <xs:sequence/>
+        <xs:attribute ref="xlink:href"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
 <xs:attribute name="byteLength" type="xs:long"/>
 <xs:attribute name="contentType" type="xs:string"/>
-<xs:attribute name="output" type="xs:string"/>
+<xs:attribute name="depth" type="xs:int"/>
+<xs:attribute name="fileName" type="xs:string"/>
+<xs:attribute name="length" type="xs:int"/>
+<xs:attribute name="name" type="xs:string"/>
+<xs:attribute name="workflowId" type="xs:string"/>
+<xs:attribute name="workflowRun" type="xs:anyURI"/>
+<xs:attribute name="workflowRunId" type="xs:string"/>
 </xs:schema>
   </wsdl:types>
   <wsdl:message name="makeRunFileResponse">

@@ -21,7 +21,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.w3c.dom.Element;
 
-import uk.org.taverna.ns._2010.data.in.Input;
+import uk.org.taverna.ns._2010.port.InputPort;
 import uk.org.taverna.ns._2010.xml.server.DirectoryEntry;
 import uk.org.taverna.ns._2010.xml.server.DirectoryReference;
 import uk.org.taverna.ns._2010.xml.server.FileReference;
@@ -263,7 +263,7 @@ public class Run {
 	 */
 	public List<String> getInputNames() throws UnknownRunException {
 		ArrayList<String> result = new ArrayList<String>();
-		for (Input i : s.getRunInputDescriptor(id).getInput()) {
+		for (InputPort i : s.getRunInputDescriptor(id).getInput()) {
 			result.add(i.getName());
 		}
 		return result;
