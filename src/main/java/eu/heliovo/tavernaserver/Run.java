@@ -36,6 +36,11 @@ import uk.org.taverna.ns._2010.xml.server.soap.NoUpdateException;
 import uk.org.taverna.ns._2010.xml.server.soap.TavernaService;
 import uk.org.taverna.ns._2010.xml.server.soap.UnknownRunException;
 
+/**
+ * A particular run of a workflow on an instance of Taverna Server.
+ * 
+ * @author Donal Fellows
+ */
 public class Run {
 	private static DatatypeFactory dtf;
 	static {
@@ -50,7 +55,8 @@ public class Run {
 	private String id;
 	private int pollInterval = 1000;
 
-	Run(TavernaService service, Element workflow) throws NoCreateException, NoUpdateException {
+	Run(TavernaService service, Element workflow) throws NoCreateException,
+			NoUpdateException {
 		this.s = service;
 		Workflow w = new Workflow();
 		w.getAny().add(workflow);
