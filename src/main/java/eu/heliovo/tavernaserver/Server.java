@@ -1,15 +1,17 @@
 package eu.heliovo.tavernaserver;
 
+import static java.util.Collections.singletonList;
+import static java.util.Collections.singletonMap;
 import static javax.xml.ws.BindingProvider.ENDPOINT_ADDRESS_PROPERTY;
 import static javax.xml.ws.BindingProvider.PASSWORD_PROPERTY;
 import static javax.xml.ws.BindingProvider.USERNAME_PROPERTY;
+import static javax.xml.ws.handler.MessageContext.HTTP_REQUEST_HEADERS;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -42,6 +44,10 @@ public class Server {
 		s = new TavernaServer().getTavernaServerImplPort();
 	}
 
+	private void putProperty(String key, Object value) {
+		((BindingProvider) s).getRequestContext().put(key, value);
+	}
+
 	/**
 	 * Create a connection to a server with the default credentials
 	 * 
@@ -49,9 +55,15 @@ public class Server {
 	 *            The address of the server endpoint to connect to.
 	 */
 	public Server(String serviceAddress) {
-		s = new TavernaServer().getTavernaServerImplPort();
-		((BindingProvider) s).getRequestContext().put(
-				ENDPOINT_ADDRESS_PROPERTY, serviceAddress);
+		this();
+		putProperty(ENDPOINT_ADDRESS_PROPERTY, serviceAddress);
+	}
+
+	public Server(String serviceAddress, Object securityToken) {
+		this(serviceAddress);
+		String token = "FIXME";//FIXME serialize the securityToken
+		putProperty(HTTP_REQUEST_HEADERS,
+				singletonMap("Helio-Security-Token", singletonList(token)));
 	}
 
 	/**
@@ -63,11 +75,9 @@ public class Server {
 	 *            Password associated with the username.
 	 */
 	public Server(String username, String password) {
-		s = new TavernaServer().getTavernaServerImplPort();
-		Map<String, Object> requestContext = ((BindingProvider) s)
-				.getRequestContext();
-		requestContext.put(USERNAME_PROPERTY, username);
-		requestContext.put(PASSWORD_PROPERTY, password);
+		this();
+		putProperty(USERNAME_PROPERTY, username);
+		putProperty(PASSWORD_PROPERTY, password);
 	}
 
 	/**
@@ -81,12 +91,10 @@ public class Server {
 	 *            Password associated with the username.
 	 */
 	public Server(String serviceAddress, String username, String password) {
-		s = new TavernaServer().getTavernaServerImplPort();
-		Map<String, Object> requestContext = ((BindingProvider) s)
-				.getRequestContext();
-		requestContext.put(ENDPOINT_ADDRESS_PROPERTY, serviceAddress);
-		requestContext.put(USERNAME_PROPERTY, username);
-		requestContext.put(PASSWORD_PROPERTY, password);
+		this();
+		putProperty(ENDPOINT_ADDRESS_PROPERTY, serviceAddress);
+		putProperty(USERNAME_PROPERTY, username);
+		putProperty(PASSWORD_PROPERTY, password);
 	}
 
 	/**
@@ -103,7 +111,7 @@ public class Server {
 	 *             If the local Java installation is misconfigured.
 	 * @throws NoUpdateException
 	 *             If the server failed to build the workflow run.
-	 * @throws NoCreateException 
+	 * @throws NoCreateException
 	 *             If the server failed to build the workflow run.
 	 */
 	public Run createRun(File workflowFile) throws SAXException, IOException,
@@ -121,10 +129,11 @@ public class Server {
 	 * @return A handle to the workflow run (which is not yet started).
 	 * @throws NoUpdateException
 	 *             If the server failed to build the workflow run.
-	 * @throws NoCreateException 
+	 * @throws NoCreateException
 	 *             If the server failed to build the workflow run.
 	 */
-	public Run createRun(Element workflow) throws NoUpdateException, NoCreateException {
+	public Run createRun(Element workflow) throws NoUpdateException,
+			NoCreateException {
 		return new Run(s, workflow);
 	}
 
