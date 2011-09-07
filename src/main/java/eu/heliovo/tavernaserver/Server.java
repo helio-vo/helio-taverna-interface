@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -61,9 +62,12 @@ public class Server {
 
 	public Server(String serviceAddress, Object securityToken) {
 		this(serviceAddress);
-		String token = "FIXME";//FIXME serialize the securityToken
-		//putProperty(HTTP_REQUEST_HEADERS,
-		//		singletonMap("Helio-Security-Token", singletonList(token)));
+		System.err.println("type of security token: "
+				+ (securityToken == null ? "<null>" : securityToken.getClass()
+						.toString()));
+		String token = securityToken.toString();// FIXME serialize the securityToken
+		putProperty(HTTP_REQUEST_HEADERS, new HashMap<String, List<String>>(
+				singletonMap("Helio-Security-Token", singletonList(token))));
 	}
 
 	/**
