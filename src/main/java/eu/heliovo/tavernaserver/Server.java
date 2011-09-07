@@ -62,8 +62,8 @@ public class Server {
 	public Server(String serviceAddress, Object securityToken) {
 		this(serviceAddress);
 		String token = "FIXME";//FIXME serialize the securityToken
-		putProperty(HTTP_REQUEST_HEADERS,
-				singletonMap("Helio-Security-Token", singletonList(token)));
+		//putProperty(HTTP_REQUEST_HEADERS,
+		//		singletonMap("Helio-Security-Token", singletonList(token)));
 	}
 
 	/**
