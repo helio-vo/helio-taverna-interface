@@ -28,6 +28,11 @@ import uk.org.taverna.ns._2010.xml.server.soap.NoCreateException;
 import uk.org.taverna.ns._2010.xml.server.soap.NoUpdateException;
 import uk.org.taverna.ns._2010.xml.server.soap.TavernaServer;
 import uk.org.taverna.ns._2010.xml.server.soap.TavernaService;
+import eu.heliovo.registryclient.AccessInterface;
+import eu.heliovo.registryclient.AccessInterfaceType;
+import eu.heliovo.registryclient.HelioServiceName;
+import eu.heliovo.registryclient.ServiceRegistryClient;
+import eu.heliovo.registryclient.impl.ServiceRegistryClientFactory;
 
 /**
  * Representation of a whole Taverna Server instance.
@@ -35,6 +40,24 @@ import uk.org.taverna.ns._2010.xml.server.soap.TavernaService;
  * @author Donal Fellows
  */
 public class Server {
+	private static HelioServiceName REGISTRY_KEY;
+	private static AccessInterfaceType tavservAPI;
+
+	public static Server getServer(Object securityToken) throws Exception {
+		if (REGISTRY_KEY == null)
+			REGISTRY_KEY = HelioServiceName.register("taverna", null);
+		if (tavservAPI == null)
+			tavservAPI = AccessInterfaceType.register("TAVERNA_SOAP",
+					"http://taverna/soap");
+		ServiceRegistryClient registry = ServiceRegistryClientFactory
+				.getInstance().getServiceRegistryClient();
+		for (AccessInterface ai : registry.getAllEndpoints(
+				registry.getServiceDescriptor(REGISTRY_KEY), null, null))
+			if (tavservAPI.equals(ai.getInterfaceType()))
+				return new Server(ai.getUrl().toString(), securityToken);
+		throw new Exception("failed to do lookup for " + tavservAPI + " at " + REGISTRY_KEY);
+	}
+
 	TavernaService s;
 
 	/**
@@ -65,7 +88,8 @@ public class Server {
 		System.err.println("type of security token: "
 				+ (securityToken == null ? "<null>" : securityToken.getClass()
 						.toString()));
-		String token = securityToken.toString();// FIXME serialize the securityToken
+		String token = securityToken.toString();// FIXME serialize the
+												// securityToken
 		putProperty(HTTP_REQUEST_HEADERS, new HashMap<String, List<String>>(
 				singletonMap("Helio-Security-Token", singletonList(token))));
 	}
