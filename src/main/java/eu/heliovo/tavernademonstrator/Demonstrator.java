@@ -1,4 +1,7 @@
 package eu.heliovo.tavernademonstrator;
+
+import static eu.heliovo.tavernaserver.util.Registry.getHelioGroup;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.Date;
@@ -19,6 +22,7 @@ public class Demonstrator {
 	public static Server server = new Server();
 	private static final boolean DO_EXPIRY_TEST = false;
 	private static final boolean DO_TERM_NOTIFY_TEST = false;
+	private static final boolean NEW_API = false;
 
 	public static void main(String... args) throws Exception {
 		if (args.length < 2 || args.length % 2 == 1) {
@@ -28,8 +32,16 @@ public class Demonstrator {
 			System.exit(1);
 		}
 
-		for (Workflow wf : Helio.group().getWorkflows()) {
-			System.out.println(wf.getId() + ": " + wf.getTitle() + " (" + wf.getUploader() + ")");
+		if (NEW_API) {
+			for (Workflow wf : getHelioGroup().getWorkflows()) {
+				System.out.println(wf.getId() + ": " + wf.getTitle() + " ("
+						+ wf.getUploader() + ")");
+			}
+		} else {
+			for (Workflow wf : Helio.group().getWorkflows()) {
+				System.out.println(wf.getId() + ": " + wf.getTitle() + " ("
+						+ wf.getUploader() + ")");
+			}
 		}
 
 		Run r = server.createRun(new File(args[0]));
