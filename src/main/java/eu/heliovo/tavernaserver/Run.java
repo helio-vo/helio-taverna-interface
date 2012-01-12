@@ -47,8 +47,7 @@ public class Run {
 		try {
 			dtf = DatatypeFactory.newInstance();
 		} catch (DatatypeConfigurationException e) {
-			e.printStackTrace();
-			System.exit(1);
+		    throw new RuntimeException("Internal Error: unable to create DataTypeFactory. Cause: " + e.getMessage(), e);
 		}
 	}
 	private TavernaService s;

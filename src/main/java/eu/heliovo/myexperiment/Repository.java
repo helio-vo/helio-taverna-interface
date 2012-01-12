@@ -37,7 +37,7 @@ public class Repository {
 
 	private String searchURL;
 	private DocumentBuilder db;
-	static final DateTimeFormatter dtf = forPattern("EEE MMM dd HH:mm:ss Z yyyy");
+	static final DateTimeFormatter dtf = forPattern("EEE MMM dd HH:mm:ss ZZZ yyyy");
 
 	// http://www.myexperiment.org/search.xml?type=group&query=helio
 	// Text value of 'group' child is name (helio)
