@@ -19,7 +19,7 @@ public class Demonstrator {
 		System.out.println("---" + property + "---\n" + value);
 	}
 
-	public static Server server = new Server();
+	public static Server server = new Server("taverna", "taverna");
 	private static final boolean DO_EXPIRY_TEST = false;
 	private static final boolean DO_TERM_NOTIFY_TEST = false;
 	private static final boolean NEW_API = false;
