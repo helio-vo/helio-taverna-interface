@@ -9,6 +9,8 @@ import static javax.xml.ws.handler.MessageContext.HTTP_REQUEST_HEADERS;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -79,7 +81,11 @@ public class Server {
 	 *            The address of the server endpoint to connect to.
 	 */
 	public Server(String serviceAddress) {
-		this();
+	    try {
+            s = new TavernaServer(new URL(serviceAddress)).getTavernaServerImplPort();
+        } catch (MalformedURLException e) {
+            throw new RuntimeException("Invalid service Address: " + serviceAddress + ":" + e.getMessage(), e);
+        }
 		putProperty(ENDPOINT_ADDRESS_PROPERTY, serviceAddress);
 	}
 
@@ -119,7 +125,7 @@ public class Server {
 	 *            Password associated with the username.
 	 */
 	public Server(String serviceAddress, String username, String password) {
-		this();
+		this(serviceAddress);
 		putProperty(ENDPOINT_ADDRESS_PROPERTY, serviceAddress);
 		putProperty(USERNAME_PROPERTY, username);
 		putProperty(PASSWORD_PROPERTY, password);
