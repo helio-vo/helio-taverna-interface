@@ -24,6 +24,7 @@ public class Demonstrator {
 	private static final boolean DO_TERM_NOTIFY_TEST = false;
 	private static final boolean NEW_API = false;
 
+	@SuppressWarnings("deprecation")
 	public static void main(String... args) throws Exception {
 		if (args.length < 2 || args.length % 2 == 1) {
 			System.err

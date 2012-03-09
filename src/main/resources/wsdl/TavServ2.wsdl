@@ -1,5 +1,4 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<wsdl:definitions name="TavernaServer" targetNamespace="http://ns.taverna.org.uk/2010/xml/server/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://ns.taverna.org.uk/2010/xml/server/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions name="TavernaServer" targetNamespace="http://ns.taverna.org.uk/2010/xml/server/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://ns.taverna.org.uk/2010/xml/server/soap/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <wsdl:types>
 <xs:schema targetNamespace="http://www.w3.org/1999/xlink" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
 <xs:attribute name="href" type="xs:string"/>
@@ -7,6 +6,7 @@
 <xs:schema attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://ns.taverna.org.uk/2010/xml/server/soap/" xmlns:admin="http://ns.taverna.org.uk/2010/xml/server/admin/" xmlns:feed="http://ns.taverna.org.uk/2010/xml/server/feed/" xmlns:port="http://ns.taverna.org.uk/2010/port/" xmlns:tns="http://ns.taverna.org.uk/2010/xml/server/soap/" xmlns:ts="http://ns.taverna.org.uk/2010/xml/server/" xmlns:ts-rest="http://ns.taverna.org.uk/2010/xml/server/rest/" xmlns:ts-soap="http://ns.taverna.org.uk/2010/xml/server/soap/" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import namespace="http://ns.taverna.org.uk/2010/xml/server/"/>
   <xs:import namespace="http://ns.taverna.org.uk/2010/port/"/>
+  <xs:import namespace="http://www.w3.org/1999/xlink"/>
   <xs:element name="addRunListener" type="ts-soap:addRunListener"/>
   <xs:element name="addRunListenerResponse" type="ts-soap:addRunListenerResponse"/>
   <xs:element name="deleteRunCertificates" type="ts-soap:deleteRunCertificates"/>
@@ -38,6 +38,8 @@
   <xs:element name="getRunExpiry" type="ts-soap:getRunExpiry"/>
   <xs:element name="getRunExpiryResponse" type="ts-soap:getRunExpiryResponse"/>
   <xs:element name="getRunFileContents" type="ts-soap:getRunFileContents"/>
+  <xs:element name="getRunFileContentsMTOM" type="ts-soap:getRunFileContentsMTOM"/>
+  <xs:element name="getRunFileContentsMTOMResponse" type="ts-soap:getRunFileContentsMTOMResponse"/>
   <xs:element name="getRunFileContentsResponse" type="ts-soap:getRunFileContentsResponse"/>
   <xs:element name="getRunFileLength" type="ts-soap:getRunFileLength"/>
   <xs:element name="getRunFileLengthResponse" type="ts-soap:getRunFileLengthResponse"/>
@@ -77,7 +79,7 @@
   <xs:element name="makeRunDirectoryResponse" type="ts-soap:makeRunDirectoryResponse"/>
   <xs:element name="makeRunFile" type="ts-soap:makeRunFile"/>
   <xs:element name="makeRunFileResponse" type="ts-soap:makeRunFileResponse"/>
-  <xs:element name="permissionList" type="ts-soap:permissionList"/>
+  <xs:element name="permissionList" type="ts-soap:PermissionList"/>
   <xs:element name="setRunCertificates" type="ts-soap:setRunCertificates"/>
   <xs:element name="setRunCertificatesResponse" type="ts-soap:setRunCertificatesResponse"/>
   <xs:element name="setRunCredential" type="ts-soap:setRunCredential"/>
@@ -85,6 +87,8 @@
   <xs:element name="setRunExpiry" type="ts-soap:setRunExpiry"/>
   <xs:element name="setRunExpiryResponse" type="ts-soap:setRunExpiryResponse"/>
   <xs:element name="setRunFileContents" type="ts-soap:setRunFileContents"/>
+  <xs:element name="setRunFileContentsMTOM" type="ts-soap:setRunFileContentsMTOM"/>
+  <xs:element name="setRunFileContentsMTOMResponse" type="ts-soap:setRunFileContentsMTOMResponse"/>
   <xs:element name="setRunFileContentsResponse" type="ts-soap:setRunFileContentsResponse"/>
   <xs:element name="setRunInputBaclavaFile" type="ts-soap:setRunInputBaclavaFile"/>
   <xs:element name="setRunInputBaclavaFileResponse" type="ts-soap:setRunInputBaclavaFileResponse"/>
@@ -117,7 +121,7 @@
     <xs:sequence>
       <xs:element minOccurs="0" name="runName" type="xs:string"/>
       <xs:element minOccurs="0" name="userName" type="xs:string"/>
-      <xs:element minOccurs="0" name="permission" type="ts:permission"/>
+      <xs:element minOccurs="0" name="permission" type="ts:Permission"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="setRunPermissionResponse">
@@ -139,16 +143,16 @@
   </xs:complexType>
   <xs:complexType name="listRunPermissionsResponse">
     <xs:sequence>
-      <xs:element minOccurs="0" name="PermissionList" type="ts-soap:permissionList"/>
+      <xs:element minOccurs="0" name="PermissionList" type="ts-soap:PermissionList"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="permissionList">
+  <xs:complexType name="PermissionList">
     <xs:sequence>
       <xs:element maxOccurs="unbounded" minOccurs="0" name="permission">
         <xs:complexType>
           <xs:sequence>
             <xs:element minOccurs="0" name="userName" type="xs:string"/>
-            <xs:element minOccurs="0" name="permission" type="ts:permission"/>
+            <xs:element minOccurs="0" name="permission" type="ts:Permission"/>
           </xs:sequence>
         </xs:complexType>
       </xs:element>
@@ -180,18 +184,33 @@
     <xs:sequence>
       <xs:element minOccurs="0" name="runName" type="xs:string"/>
       <xs:element minOccurs="0" name="portName" type="xs:string"/>
-      <xs:element minOccurs="0" name="portFilename" type="xs:string"/>
+      <xs:element minOccurs="0" name="portFileName" type="xs:string"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="setRunInputPortFileResponse">
+    <xs:sequence/>
+  </xs:complexType>
+  <xs:complexType name="setRunFileContentsMTOM">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="runName" type="xs:string"/>
+      <xs:element minOccurs="0" name="contents" type="ts-soap:FileContents"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="FileContents">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="name" type="xs:string"/>
+      <xs:element minOccurs="0" name="fileData" ns1:expectedContentTypes="application/octet-stream" type="xs:base64Binary" xmlns:ns1="http://www.w3.org/2005/05/xmlmime"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="setRunFileContentsMTOMResponse">
     <xs:sequence/>
   </xs:complexType>
   <xs:complexType name="setRunListenerProperty">
     <xs:sequence>
       <xs:element minOccurs="0" name="runName" type="xs:string"/>
       <xs:element minOccurs="0" name="listenerName" type="xs:string"/>
-      <xs:element minOccurs="0" name="propertName" type="xs:string"/>
-      <xs:element minOccurs="0" name="value" type="xs:string"/>
+      <xs:element minOccurs="0" name="propertyName" type="xs:string"/>
+      <xs:element minOccurs="0" name="propertyValue" type="xs:string"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="setRunListenerPropertyResponse">
@@ -277,6 +296,16 @@
       <xs:element minOccurs="0" name="ListenerPropertyValue" type="xs:string"/>
     </xs:sequence>
   </xs:complexType>
+  <xs:complexType name="getRunListeners">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="runName" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getRunListenersResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="ListenerName" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
   <xs:complexType name="setRunInputPortValue">
     <xs:sequence>
       <xs:element minOccurs="0" name="runName" type="xs:string"/>
@@ -287,14 +316,15 @@
   <xs:complexType name="setRunInputPortValueResponse">
     <xs:sequence/>
   </xs:complexType>
-  <xs:complexType name="getRunListeners">
+  <xs:complexType name="getRunFileContentsMTOM">
     <xs:sequence>
       <xs:element minOccurs="0" name="runName" type="xs:string"/>
+      <xs:element minOccurs="0" name="fileName" type="ts:DirectoryEntry"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="getRunListenersResponse">
+  <xs:complexType name="getRunFileContentsMTOMResponse">
     <xs:sequence>
-      <xs:element maxOccurs="unbounded" minOccurs="0" name="ListenerName" type="xs:string"/>
+      <xs:element minOccurs="0" name="FileContentsMTOM" type="ts-soap:FileContents"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="setRunCredential">
@@ -417,7 +447,7 @@
     <xs:sequence>
       <xs:element minOccurs="0" name="runName" type="xs:string"/>
       <xs:element minOccurs="0" name="parentDirectory" type="ts:DirectoryEntry"/>
-      <xs:element minOccurs="0" name="fileName" type="xs:string"/>
+      <xs:element minOccurs="0" name="fileNameTail" type="xs:string"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="makeRunFileResponse">
@@ -468,7 +498,7 @@
   <xs:complexType name="setRunOutputBaclavaFile">
     <xs:sequence>
       <xs:element minOccurs="0" name="runName" type="xs:string"/>
-      <xs:element minOccurs="0" name="outputFile" type="xs:string"/>
+      <xs:element minOccurs="0" name="baclavaFileName" type="xs:string"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="setRunOutputBaclavaFileResponse">
@@ -477,7 +507,7 @@
   <xs:complexType name="setRunInputBaclavaFile">
     <xs:sequence>
       <xs:element minOccurs="0" name="runName" type="xs:string"/>
-      <xs:element minOccurs="0" name="fileName" type="xs:string"/>
+      <xs:element minOccurs="0" name="baclavaFileName" type="xs:string"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="setRunInputBaclavaFileResponse">
@@ -524,7 +554,7 @@
   </xs:complexType>
   <xs:complexType name="getRunInputsResponse">
     <xs:sequence>
-      <xs:element minOccurs="0" name="RunInputDescription" type="ts:InputDescription"/>
+      <xs:element minOccurs="0" name="RunInputDescription" type="ts:InputConfigurationDescription"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="getRunCreationTime">
@@ -628,14 +658,13 @@
 </xs:schema>
 <xs:schema attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://ns.taverna.org.uk/2010/xml/server/" version="1.0" xmlns:admin="http://ns.taverna.org.uk/2010/xml/server/admin/" xmlns:feed="http://ns.taverna.org.uk/2010/xml/server/feed/" xmlns:tns="http://ns.taverna.org.uk/2010/xml/server/" xmlns:ts="http://ns.taverna.org.uk/2010/xml/server/" xmlns:ts-rest="http://ns.taverna.org.uk/2010/xml/server/rest/" xmlns:ts-soap="http://ns.taverna.org.uk/2010/xml/server/soap/" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xs="http://www.w3.org/2001/XMLSchema">
 <xs:import namespace="http://www.w3.org/1999/xlink"/>
-<xs:element name="cagridproxy" type="tns:CaGridProxyCredential"/>
 <xs:element name="dir" type="tns:DirectoryReference"/>
 <xs:element name="file" type="tns:FileReference"/>
-<xs:element name="inputDescription" type="tns:InputDescription"/>
+<xs:element name="inputConfiguration" type="tns:InputConfigurationDescription"/>
 <xs:element name="keypair" type="tns:KeyPairCredential"/>
-<xs:element name="password" type="tns:PasswordCredential"/>
 <xs:element name="runReference" type="tns:TavernaRun"/>
 <xs:element name="trustedIdentity" type="tns:TrustDescriptor"/>
+<xs:element name="userpass" type="tns:PasswordCredential"/>
 <xs:element name="workflow" type="tns:Workflow"/>
 <xs:complexType name="DirectoryEntry">
     <xs:simpleContent>
@@ -673,13 +702,13 @@
       <xs:element minOccurs="0" name="certificateFile" type="xs:string"/>
       <xs:element minOccurs="0" name="fileType" type="xs:string"/>
       <xs:element minOccurs="0" name="certificateBytes" type="xs:base64Binary"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="serverName" type="xs:string"/>
     </xs:sequence>
     <xs:attribute ref="xlink:href"/>
   </xs:complexType>
 <xs:complexType abstract="true" name="CredentialDescriptor">
     <xs:sequence>
       <xs:element minOccurs="0" name="serviceURI" type="xs:anyURI"/>
-      <xs:element minOccurs="0" name="credentialBytes" type="xs:base64Binary"/>
     </xs:sequence>
     <xs:attribute ref="xlink:href"/>
   </xs:complexType>
@@ -691,6 +720,7 @@
           <xs:element minOccurs="0" name="credentialFile" type="xs:string"/>
           <xs:element minOccurs="0" name="fileType" type="xs:string"/>
           <xs:element minOccurs="0" name="unlockPassword" type="xs:string"/>
+          <xs:element minOccurs="0" name="credentialBytes" type="xs:base64Binary"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -705,41 +735,31 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-<xs:complexType name="CaGridProxyCredential">
+<xs:complexType name="InputConfigurationDescription">
     <xs:complexContent>
-      <xs:extension base="tns:KeyPairCredential">
-        <xs:sequence>
-          <xs:element name="authenticationService" type="xs:anyURI"/>
-          <xs:element name="dorianService" type="xs:anyURI"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-<xs:complexType name="InputDescription">
-    <xs:complexContent>
-      <xs:extension base="tns:versionedElement">
+      <xs:extension base="tns:VersionedElement">
         <xs:sequence>
           <xs:element minOccurs="0" name="baclavaFile" type="xs:string"/>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="port" type="tns:PortDescription"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="port" type="tns:PortConfigurationDescription"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-<xs:complexType abstract="true" name="versionedElement">
+<xs:complexType abstract="true" name="VersionedElement">
     <xs:sequence/>
     <xs:attribute ref="tns:serverVersion"/>
     <xs:attribute ref="tns:serverRevision"/>
     <xs:attribute ref="tns:serverBuildTimestamp"/>
   </xs:complexType>
-<xs:complexType name="PortDescription">
+<xs:complexType name="PortConfigurationDescription">
     <xs:simpleContent>
       <xs:extension base="xs:string">
-        <xs:attribute ref="tns:name" use="required"/>
-        <xs:attribute ref="tns:file"/>
+        <xs:attribute ref="tns:portName" use="required"/>
+        <xs:attribute ref="tns:portFile"/>
       </xs:extension>
     </xs:simpleContent>
   </xs:complexType>
-<xs:simpleType name="permission">
+<xs:simpleType name="Permission">
     <xs:restriction base="xs:string">
       <xs:enumeration value="none"/>
       <xs:enumeration value="read"/>
@@ -755,8 +775,9 @@
       <xs:enumeration value="Finished"/>
     </xs:restriction>
   </xs:simpleType>
-<xs:attribute name="file" type="xs:string"/>
 <xs:attribute name="name" type="xs:string"/>
+<xs:attribute name="portFile" type="xs:string"/>
+<xs:attribute name="portName" type="xs:string"/>
 <xs:attribute name="serverBuildTimestamp" type="xs:string"/>
 <xs:attribute name="serverRevision" type="xs:string"/>
 <xs:attribute name="serverVersion" type="xs:string"/>
@@ -767,101 +788,101 @@
 <xs:element name="workflowOutputs" type="tns:outputDescription"/>
 <xs:complexType name="outputDescription">
     <xs:complexContent>
-      <xs:extension base="tns:portDescription">
+      <xs:extension base="tns:PortDescription">
         <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="output" type="tns:outputPort"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="output" type="tns:OutputPort"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-<xs:complexType abstract="true" name="portDescription">
+<xs:complexType abstract="true" name="PortDescription">
     <xs:sequence/>
     <xs:attribute ref="tns:workflowId"/>
     <xs:attribute ref="tns:workflowRun"/>
     <xs:attribute ref="tns:workflowRunId"/>
   </xs:complexType>
-<xs:complexType name="outputPort">
+<xs:complexType name="OutputPort">
     <xs:complexContent>
-      <xs:extension base="tns:port">
+      <xs:extension base="tns:Port">
         <xs:choice>
-          <xs:element name="value" type="tns:leafValue"/>
-          <xs:element name="list" type="tns:listValue"/>
-          <xs:element name="error" type="tns:errorValue"/>
-          <xs:element name="absent" type="tns:absentValue"/>
+          <xs:element name="value" type="tns:LeafValue"/>
+          <xs:element name="list" type="tns:ListValue"/>
+          <xs:element name="error" type="tns:ErrorValue"/>
+          <xs:element name="absent" type="tns:AbsentValue"/>
         </xs:choice>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-<xs:complexType name="port">
+<xs:complexType name="Port">
     <xs:sequence/>
     <xs:attribute ref="tns:name" use="required"/>
     <xs:attribute ref="tns:depth"/>
   </xs:complexType>
-<xs:complexType name="leafValue">
+<xs:complexType name="LeafValue">
     <xs:complexContent>
-      <xs:extension base="tns:value">
+      <xs:extension base="tns:Value">
         <xs:sequence/>
-        <xs:attribute ref="tns:fileName"/>
+        <xs:attribute ref="tns:contentFile"/>
         <xs:attribute ref="tns:contentType"/>
-        <xs:attribute ref="tns:byteLength"/>
+        <xs:attribute ref="tns:contentByteLength"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-<xs:complexType abstract="true" name="value">
+<xs:complexType abstract="true" name="Value">
     <xs:sequence/>
     <xs:attribute ref="xlink:href"/>
   </xs:complexType>
-<xs:complexType name="errorValue">
+<xs:complexType name="ErrorValue">
     <xs:complexContent>
-      <xs:extension base="tns:value">
+      <xs:extension base="tns:Value">
         <xs:sequence/>
         <xs:attribute ref="tns:depth"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-<xs:complexType name="listValue">
+<xs:complexType name="ListValue">
     <xs:complexContent>
-      <xs:extension base="tns:value">
+      <xs:extension base="tns:Value">
         <xs:sequence>
           <xs:choice maxOccurs="unbounded" minOccurs="0">
-            <xs:element name="value" type="tns:leafValue"/>
-            <xs:element name="list" type="tns:listValue"/>
-            <xs:element name="error" type="tns:errorValue"/>
-            <xs:element name="absent" type="tns:absentValue"/>
+            <xs:element name="value" type="tns:LeafValue"/>
+            <xs:element name="list" type="tns:ListValue"/>
+            <xs:element name="error" type="tns:ErrorValue"/>
+            <xs:element name="absent" type="tns:AbsentValue"/>
           </xs:choice>
         </xs:sequence>
         <xs:attribute ref="tns:length"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-<xs:complexType name="absentValue">
+<xs:complexType name="AbsentValue">
     <xs:complexContent>
-      <xs:extension base="tns:value">
+      <xs:extension base="tns:Value">
         <xs:sequence/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
 <xs:complexType name="inputDescription">
     <xs:complexContent>
-      <xs:extension base="tns:portDescription">
+      <xs:extension base="tns:PortDescription">
         <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="input" type="tns:inputPort"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="input" type="tns:InputPort"/>
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-<xs:complexType name="inputPort">
+<xs:complexType name="InputPort">
     <xs:complexContent>
-      <xs:extension base="tns:port">
+      <xs:extension base="tns:Port">
         <xs:sequence/>
         <xs:attribute ref="xlink:href"/>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-<xs:attribute name="byteLength" type="xs:long"/>
+<xs:attribute name="contentByteLength" type="xs:long"/>
+<xs:attribute name="contentFile" type="xs:string"/>
 <xs:attribute name="contentType" type="xs:string"/>
 <xs:attribute name="depth" type="xs:int"/>
-<xs:attribute name="fileName" type="xs:string"/>
 <xs:attribute name="length" type="xs:int"/>
 <xs:attribute name="name" type="xs:string"/>
 <xs:attribute name="workflowId" type="xs:string"/>
@@ -1045,6 +1066,10 @@
     <wsdl:part element="tns:getRunListenerPropertyResponse" name="parameters">
     </wsdl:part>
   </wsdl:message>
+  <wsdl:message name="setRunFileContentsMTOMResponse">
+    <wsdl:part element="tns:setRunFileContentsMTOMResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
   <wsdl:message name="getRunCreationTime">
     <wsdl:part element="tns:getRunCreationTime" name="parameters">
     </wsdl:part>
@@ -1053,12 +1078,24 @@
     <wsdl:part element="tns:getRunStartTime" name="parameters">
     </wsdl:part>
   </wsdl:message>
+  <wsdl:message name="setRunFileContentsMTOM">
+    <wsdl:part element="tns:setRunFileContentsMTOM" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
   <wsdl:message name="deleteRunCertificatesResponse">
     <wsdl:part element="tns:deleteRunCertificatesResponse" name="parameters">
     </wsdl:part>
   </wsdl:message>
+  <wsdl:message name="getRunFileContentsMTOMResponse">
+    <wsdl:part element="tns:getRunFileContentsMTOMResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
   <wsdl:message name="getRunFileContentsResponse">
     <wsdl:part element="tns:getRunFileContentsResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getRunFileContentsMTOM">
+    <wsdl:part element="tns:getRunFileContentsMTOM" name="parameters">
     </wsdl:part>
   </wsdl:message>
   <wsdl:message name="getRunDirectoryAsZipResponse">
@@ -1376,6 +1413,21 @@
       <wsdl:fault message="tns:BadStateChangeException" name="BadStateChangeException">
     </wsdl:fault>
     </wsdl:operation>
+    <wsdl:operation name="setRunFileContentsMTOM">
+<wsdl:documentation>Set the contents of a file under the run's working directory.</wsdl:documentation>
+      <wsdl:input message="tns:setRunFileContentsMTOM" name="setRunFileContentsMTOM">
+    </wsdl:input>
+      <wsdl:output message="tns:setRunFileContentsMTOMResponse" name="setRunFileContentsMTOMResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:FilesystemAccessException" name="FilesystemAccessException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:UnknownRunException" name="UnknownRunException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:NoUpdateException" name="NoUpdateException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:NoDirectoryEntryException" name="NoDirectoryEntryException">
+    </wsdl:fault>
+    </wsdl:operation>
     <wsdl:operation name="setRunListenerProperty">
 <wsdl:documentation>Set the value of a property for an event listener attached to a run.</wsdl:documentation>
       <wsdl:input message="tns:setRunListenerProperty" name="setRunListenerProperty">
@@ -1473,6 +1525,15 @@
       <wsdl:fault message="tns:UnknownRunException" name="UnknownRunException">
     </wsdl:fault>
     </wsdl:operation>
+    <wsdl:operation name="getRunListeners">
+<wsdl:documentation>Get the names of the event listeners attached to the run.</wsdl:documentation>
+      <wsdl:input message="tns:getRunListeners" name="getRunListeners">
+    </wsdl:input>
+      <wsdl:output message="tns:getRunListenersResponse" name="getRunListenersResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:UnknownRunException" name="UnknownRunException">
+    </wsdl:fault>
+    </wsdl:operation>
     <wsdl:operation name="setRunInputPortValue">
 <wsdl:documentation>Tells the given run to use the given literal string value for input on the given port.</wsdl:documentation>
       <wsdl:input message="tns:setRunInputPortValue" name="setRunInputPortValue">
@@ -1488,13 +1549,17 @@
       <wsdl:fault message="tns:BadStateChangeException" name="BadStateChangeException">
     </wsdl:fault>
     </wsdl:operation>
-    <wsdl:operation name="getRunListeners">
-<wsdl:documentation>Get the names of the event listeners attached to the run.</wsdl:documentation>
-      <wsdl:input message="tns:getRunListeners" name="getRunListeners">
+    <wsdl:operation name="getRunFileContentsMTOM">
+<wsdl:documentation>Get the contents of a file via MTOM.</wsdl:documentation>
+      <wsdl:input message="tns:getRunFileContentsMTOM" name="getRunFileContentsMTOM">
     </wsdl:input>
-      <wsdl:output message="tns:getRunListenersResponse" name="getRunListenersResponse">
+      <wsdl:output message="tns:getRunFileContentsMTOMResponse" name="getRunFileContentsMTOMResponse">
     </wsdl:output>
+      <wsdl:fault message="tns:FilesystemAccessException" name="FilesystemAccessException">
+    </wsdl:fault>
       <wsdl:fault message="tns:UnknownRunException" name="UnknownRunException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:NoDirectoryEntryException" name="NoDirectoryEntryException">
     </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="setRunCredential">
@@ -1960,6 +2025,27 @@
         <soap:fault name="BadStateChangeException" use="literal"/>
       </wsdl:fault>
     </wsdl:operation>
+    <wsdl:operation name="setRunFileContentsMTOM">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="setRunFileContentsMTOM">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="setRunFileContentsMTOMResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="FilesystemAccessException">
+        <soap:fault name="FilesystemAccessException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="UnknownRunException">
+        <soap:fault name="UnknownRunException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NoUpdateException">
+        <soap:fault name="NoUpdateException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NoDirectoryEntryException">
+        <soap:fault name="NoDirectoryEntryException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
     <wsdl:operation name="setRunListenerProperty">
       <soap:operation soapAction="" style="document"/>
       <wsdl:input name="setRunListenerProperty">
@@ -2102,6 +2188,24 @@
       </wsdl:output>
       <wsdl:fault name="UnknownRunException">
         <soap:fault name="UnknownRunException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getRunFileContentsMTOM">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getRunFileContentsMTOM">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getRunFileContentsMTOMResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="FilesystemAccessException">
+        <soap:fault name="FilesystemAccessException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="UnknownRunException">
+        <soap:fault name="UnknownRunException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="NoDirectoryEntryException">
+        <soap:fault name="NoDirectoryEntryException" use="literal"/>
       </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="setRunInputPortValue">
